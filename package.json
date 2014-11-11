@@ -1,0 +1,18 @@
+{
+  "name": "compass-kata",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "jquery": "^2.1.1",
+    "planet-maps": "^0.1.0",
+    "webpack": "^1.4.13",
+    "webpack-dev-server": "^1.6.5"
+  }
+}
