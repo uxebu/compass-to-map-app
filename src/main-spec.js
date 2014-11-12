@@ -1,8 +1,16 @@
 var util = require('./util');
-var image = util.image;
-var scrollDetection = util.scrollDetection;
+var Image = util.Image;
+var ScrollHandler = util.ScrollHandler;
 
 describe('when scrolling', function() {
+
+  var image;
+  var scrollDetection;
+  beforeEach(function() {
+    image = new Image();
+    scrollDetection = new ScrollHandler(image);
+  });
+
   it('should update the image rotation', function() {
     spyOn(image, 'rotate');
     scrollDetection.update();
