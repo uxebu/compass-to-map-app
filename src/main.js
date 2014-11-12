@@ -33,21 +33,23 @@ jQuery(document).on('scroll', function() {
   if (direction[angleFloored]) {
     text = direction[angleFloored % 360];
   }
-  jQuery('#directionHeading').text(text);
+  //jQuery('#directionHeading').text(text);
 
 
   window.addEventListener('deviceorientation', function(event) {
-    jQuery('#directionHeading').text('deg: ' + compassHeading(event.alpha, event.beta, event.gamma));
-  });
+  //  jQuery('#directionHeading').text('deg: ' + compassHeading(event.alpha, event.beta, event.gamma));
+  //});
 
-  var rotation = Math.PI * 2 * angle / 360;
-  map.beforeRender(function(map) {
-    map.getView().setRotation(rotation);
+    angle = compassHeading(event.alpha, event.beta, event.gamma);
+    var rotation = Math.PI * 2 * angle / 360;
+    map.beforeRender(function(map) {
+      map.getView().setRotation(rotation);
+    });
   });
 });
 
 var map;
-var ol = require('planet-maps/dist/ol-base');
+var ol = require('planet-maps');
 jQuery(function() {
   map = new ol.Map({
     layers: [
