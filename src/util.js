@@ -1,23 +1,13 @@
-var jQuery = require('jquery');
 
-function Image() {}
-Image.prototype = {
-  rotate: function(angle) {
-    jQuery('#compassImage').css('webkitTransform', 'rotate(' + angle + 'deg)');
-  }
-};
-
-function ScrollHandler(image) {
+function ImageRotator(image) {
   this.image = image;
 }
-ScrollHandler.prototype = {
-  update: function(pixels) {
-    var degree = pixels % 360;
-    this.image.rotate(degree);
+ImageRotator.prototype = {
+  update: function(angle) {
+    this.image.css('webkitTransform', 'rotate(' + angle + 'deg)');
   }
 };
 
 module.exports = {
-  Image: Image,
-  ScrollHandler: ScrollHandler
+  ImageRotator: ImageRotator
 };
