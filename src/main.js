@@ -1,14 +1,8 @@
-var image = {
-  rotate: function() {}
-};
-var scrollDetection = {
-  onUpdate: function(pixel) {
-    var degree = pixel % 360;
-    image.rotate(degree);
-  }
-};
+var jQuery = require('jquery');
+var scrollDetection = require('./util').scrollDetection;
 
-module.exports = {
-  image: image,
-  scrollDetection: scrollDetection
-};
+jQuery(document).on('scroll', function() {
+  var angle = (document.body.scrollTop / jQuery(window).height()) * 360;
+  scrollDetection.update(angle);
+});
+
