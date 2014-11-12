@@ -5,7 +5,6 @@ var Image = util.Image;
 
 var image = new Image();
 jQuery(document).on('scroll', function() {
-  var angle = (document.body.scrollTop / jQuery(window).height()) * 360;
-  new ScrollHandler(image).update(angle);
+  new ScrollHandler(image).update(document.body.scrollTop);
 });
 

@@ -3,7 +3,7 @@ var jQuery = require('jquery');
 function Image() {}
 Image.prototype = {
   rotate: function(angle) {
-    jQuery('#compassImage').css('webkitTransform', 'rotate(' + (360 - angle) + 'deg)');
+    jQuery('#compassImage').css('webkitTransform', 'rotate(' + angle + 'deg)');
   }
 };
 
