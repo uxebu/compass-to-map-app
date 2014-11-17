@@ -9,7 +9,9 @@ var app = {
     domUtil.onScroll(function(scrollPos) {
       rotateByDegrees(convert.scrollPositionToDegrees(scrollPos));
     });
-    domUtil.onDeviceOrientationChange(rotateByDegrees);
+    domUtil.onDeviceOrientationChange(function(event) {
+      rotateByDegrees(convert.deviceOrientationEventToDegrees(event));
+    });
   }
 };
 
@@ -20,6 +22,9 @@ function rotateByDegrees(degrees) {
 var convert = {
   scrollPositionToDegrees: function(scrollPosition) {
     return scrollPosition.top / 2;
+  },
+  deviceOrientationEventToDegrees: function(event) {
+    return event.alpha;
   }
 };
 
@@ -74,9 +79,22 @@ describe('after app start', function() {
 
     it('when event fires from the DOM it shall rotate', function() {
       var degrees = 42;
+      spyOn(convert, 'deviceOrientationEventToDegrees').andReturn(degrees);
+
       app.start();
       fakeOnDeviceOrientationChangeCallback(degrees);
+
       expect(domUtil.rotate).toHaveBeenCalledWith(degrees);
+    });
+    it('should convert deviceorientation event to degrees', function() {
+      var degrees = 42;
+      var event = {alpha: degrees};
+      var expected = convert.deviceOrientationEventToDegrees(event);
+
+      app.start();
+      fakeOnDeviceOrientationChangeCallback(event);
+
+      expect(domUtil.rotate).toHaveBeenCalledWith(expected);
     });
   });
 });
