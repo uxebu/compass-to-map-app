@@ -36,6 +36,14 @@ describe('after app start', function() {
     expect(mockedDomUtil.onScroll).not.toHaveBeenCalled();
   });
 
+  it('should inform the UI what event is being used', function() {
+    mockedDomUtil.hasDeviceOrientation.andReturn(true);
+
+    startApp();
+
+    expect(mockedDomUtil.showInputType).toHaveBeenCalledWith(App.INPUT_TYPE_COMPASS);
+  });
+
   function startApp() {
     var app = new App(mockedDomUtil, mockedConvert);
     app.start();

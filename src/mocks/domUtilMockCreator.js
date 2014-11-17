@@ -2,7 +2,8 @@ var methodNames = [
   'onScroll',
   'onDeviceOrientationChange',
   'rotate',
-  'hasDeviceOrientation'
+  'hasDeviceOrientation',
+  'showInputType'
 ];
 
 function createMock() {

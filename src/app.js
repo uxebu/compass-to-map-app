@@ -3,10 +3,13 @@ function App(domUtil, convert) {
   this._convert = convert;
 }
 
+App.INPUT_TYPE_COMPASS = 'Compass';
+
 App.prototype = {
   start: function() {
     if (this._domUtil.hasDeviceOrientation()) {
       this._domUtil.onDeviceOrientationChange(this._rotateByDeviceOrienationEvent.bind(this));
+      this._domUtil.showInputType(App.INPUT_TYPE_COMPASS);
     } else {
       this._domUtil.onScroll(this._rotateByScrollPosition.bind(this));
     }
