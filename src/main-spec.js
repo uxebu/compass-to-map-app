@@ -6,7 +6,9 @@ var domUtil = {
 
 var app = {
   start: function() {
-    domUtil.onScroll(rotateByDegrees);
+    domUtil.onScroll(function(scrollPos) {
+      rotateByDegrees(convert.scrollPositionToDegrees(scrollPos));
+    });
     domUtil.onDeviceOrientationChange(rotateByDegrees);
   }
 };
@@ -15,43 +17,65 @@ function rotateByDegrees(degrees) {
   domUtil.rotate(degrees);
 }
 
-describe('on app start rotate on an event', function() {
+var convert = {
+  scrollPositionToDegrees: function(scrollPosition) {
+    return scrollPosition.top / 2;
+  }
+};
+
+describe('after app start', function() {
 
   beforeEach(function() {
     spyOn(domUtil, 'rotate');
   });
 
-  describe('on scroll', function() {
+  describe('rotate on scroll', function() {
     var onScrollCallback;
     beforeEach(function() {
       spyOn(domUtil, 'onScroll').andCallFake(function(cb) { onScrollCallback = cb; });
+      spyOn(convert, 'scrollPositionToDegrees');
     });
 
-    function callOnScrollCallback(degrees) {
+    function fakeOnScrollCallback(degrees) {
       onScrollCallback(degrees);
     }
 
     it('when onScroll fires from the DOM it shall rotate', function() {
       var degrees = 42;
+      convert.scrollPositionToDegrees.andReturn(degrees);
+
       app.start();
-      callOnScrollCallback(degrees);
+      fakeOnScrollCallback(degrees);
+
       expect(domUtil.rotate).toHaveBeenCalledWith(degrees);
     });
+
+    it('should convert scroll position to degrees', function() {
+      var degrees = 42;
+      var expected = convert.scrollPositionToDegrees({top: degrees});
+
+      app.start();
+      fakeOnScrollCallback(degrees);
+
+      expect(domUtil.rotate).toHaveBeenCalledWith(expected);
+    });
   });
-  describe('on deviceorientation change', function() {
+
+
+  describe('rotate on deviceorientation change', function() {
     var onDeviceOrientationChangeCallback;
     beforeEach(function() {
       spyOn(domUtil, 'onDeviceOrientationChange').andCallFake(function(cb) { onDeviceOrientationChangeCallback = cb; });
     });
 
-    function callOnDeviceOrientationChangeCallback(degrees) {
+    function fakeOnDeviceOrientationChangeCallback(degrees) {
       onDeviceOrientationChangeCallback(degrees);
     }
 
     it('when event fires from the DOM it shall rotate', function() {
       var degrees = 42;
       app.start();
-      callOnDeviceOrientationChangeCallback(degrees);
+      fakeOnDeviceOrientationChangeCallback(degrees);
       expect(domUtil.rotate).toHaveBeenCalledWith(degrees);
     });
   });
