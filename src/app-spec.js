@@ -1,14 +1,6 @@
 var App = require('./app');
 var mockedDomUtil = require('./mocks/domUtil');
-
-var convert = {
-  scrollPositionToDegrees: function(scrollPosition) {
-    return scrollPosition.top / 2;
-  },
-  deviceOrientationEventToDegrees: function(event) {
-    return event.alpha;
-  }
-};
+var mockedConvert = require('./mocks/convert');
 
 describe('after app start', function() {
 
@@ -17,7 +9,7 @@ describe('after app start', function() {
   });
 
   function startApp() {
-    var app = new App(mockedDomUtil, convert);
+    var app = new App(mockedDomUtil, mockedConvert);
     app.start();
   }
 
@@ -33,7 +25,7 @@ describe('after app start', function() {
 
     it('when onScroll fires from the DOM it shall rotate', function() {
       var degrees = 42;
-      spyOn(convert, 'scrollPositionToDegrees').andReturn(degrees);
+      spyOn(mockedConvert, 'scrollPositionToDegrees').andReturn(degrees);
 
       startApp();
       fakeOnScrollCallback(degrees);
@@ -55,7 +47,7 @@ describe('after app start', function() {
 
     it('when event fires from the DOM it shall rotate', function() {
       var degrees = 42;
-      spyOn(convert, 'deviceOrientationEventToDegrees').andReturn(degrees);
+      spyOn(mockedConvert, 'deviceOrientationEventToDegrees').andReturn(degrees);
 
       startApp();
       fakeOnDeviceOrientationChangeCallback(degrees);
