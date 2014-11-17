@@ -11,6 +11,12 @@ var domUtil = {
   },
   onDeviceOrientationChange: function(fn) {
     window.addEventListener('deviceorientation', fn)
+  },
+  hasDeviceOrientation: function() {
+    return 'DeviceOrientationEvent' in window;
+  },
+  showInputType: function(type) {
+    jQuery('#inputType').html(type);
   }
 };
 
