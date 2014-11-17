@@ -21,14 +21,14 @@ App.prototype = {
   },
 
   _checkForAppSwitch: function() {
-    var deviceRotationApp = this._deviceRotationApp;
-    var scrollApp = this._scrollApp;
-    setTimeout(function() {
-      if (!deviceRotationApp.hasReceivedEventLately(App.TYPE_SWITCH_TIMEOUT)) {
-        deviceRotationApp.stop();
-        scrollApp.start();
-      }
-    }, App.TYPE_SWITCH_TIMEOUT);
+    setTimeout(this._doAppSwitchIfNecessary.bind(this), App.TYPE_SWITCH_TIMEOUT);
+  },
+
+  _doAppSwitchIfNecessary: function() {
+    if (!this._deviceRotationApp.hasReceivedEventLately(App.TYPE_SWITCH_TIMEOUT)) {
+      this._deviceRotationApp.stop();
+      this._scrollApp.start();
+    }
   }
 };
 
