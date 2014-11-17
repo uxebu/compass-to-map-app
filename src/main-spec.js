@@ -1,28 +1,10 @@
+var App = require('./app');
+
 var domUtil = {
   rotate: function() {},
   onScroll: function() {},
   onDeviceOrientationChange: function() {}
 };
-
-function App(domUtil, convert) {
-  this._domUtil = domUtil;
-  this._convert = convert;
-}
-App.prototype = {
-  start: function() {
-    var convert = this._convert;
-    this._domUtil.onScroll(function(scrollPos) {
-      rotateByDegrees(convert.scrollPositionToDegrees(scrollPos));
-    });
-    this._domUtil.onDeviceOrientationChange(function(event) {
-      rotateByDegrees(convert.deviceOrientationEventToDegrees(event));
-    });
-  }
-};
-
-function rotateByDegrees(degrees) {
-  domUtil.rotate(degrees);
-}
 
 var convert = {
   scrollPositionToDegrees: function(scrollPosition) {
