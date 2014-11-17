@@ -1,10 +1,9 @@
 var App = require('./app');
 var createDomUtilMock = require('./mocks/domUtilMockCreator');
 
-function FakeApp() {}
-FakeApp.prototype = {
-  start: function() {}
-};
+function FakeApp() {
+  this.start = function() {};
+}
 
 describe('after app start', function() {
 
