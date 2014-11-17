@@ -13,10 +13,6 @@ describe('after app start', function() {
   });
 
   describe('and page was loaded', function() {
-    beforeEach(function() {
-      mockedDomUtil.onPageLoaded.andCallFake(function(fn) { fn(); })
-    });
-
     it('rotate on scroll', function() {
       mockedDomUtil.hasDeviceOrientation.andReturn(false);
       var scrollOffset = 42;
@@ -33,16 +29,6 @@ describe('after app start', function() {
     //
     //  expect(mockedDomUtil.showInputType).toHaveBeenCalledWith(ScrollBehaviorApp.INPUT_TYPE_COMPASS);
     //});
-  });
-
-  describe('if page has not been loaded yet', function() {
-    it('scrolling should not rotate yet', function() {
-      mockedDomUtil.hasDeviceOrientation.andReturn(false);
-
-      startAppAndFakeAScrollTo(1);
-
-      expect(mockedDomUtil.rotate).not.toHaveBeenCalled();
-    });
   });
 
   function startApp() {

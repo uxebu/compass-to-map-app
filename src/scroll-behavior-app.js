@@ -6,10 +6,6 @@ function ScrollBehaviorApp(domUtil, convert) {
 ScrollBehaviorApp.prototype = {
 
   start: function() {
-    this._domUtil.onPageLoaded(this._connectScroll.bind(this));
-  },
-
-  _connectScroll: function() {
     this._domUtil.onScroll(this._rotateByScrollPosition.bind(this));
   },
 

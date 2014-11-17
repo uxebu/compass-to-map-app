@@ -13,41 +13,9 @@ describe('after app start', function() {
   });
 
   describe('and page was loaded', function() {
+
     beforeEach(function() {
       mockedDomUtil.onPageLoaded.andCallFake(function(fn) { fn(); })
-    });
-
-    it('rotate on scroll', function() {
-      mockedDomUtil.hasDeviceOrientation.andReturn(false);
-      var scrollOffset = 42;
-
-      startAppAndFakeAScrollTo(scrollOffset);
-
-      expect(mockedDomUtil.rotate).toHaveBeenCalledWith(scrollOffset);
-    });
-
-    it('rotate on deviceorientation change', function() {
-      mockedDomUtil.hasDeviceOrientation.andReturn(true);
-      var degrees = 23;
-      startAppAndFakeADeviceOrientationChangeTo(degrees);
-
-      expect(mockedDomUtil.rotate).toHaveBeenCalledWith(degrees);
-    });
-
-    it('should only use deviceorientation if available', function() {
-      mockedDomUtil.hasDeviceOrientation.andReturn(true);
-
-      startApp();
-
-      expect(mockedDomUtil.onScroll).not.toHaveBeenCalled();
-    });
-
-    it('should inform the UI what event is being used', function() {
-      mockedDomUtil.hasDeviceOrientation.andReturn(true);
-
-      startApp();
-
-      expect(mockedDomUtil.showInputType).toHaveBeenCalledWith(App.INPUT_TYPE_COMPASS);
     });
 
     describe('switch back to scroll if deviceorientation doesnt change', function() {
@@ -85,6 +53,7 @@ describe('after app start', function() {
 
       expect(mockedDomUtil.rotate).not.toHaveBeenCalled();
     });
+
     it('deviceorientation should not rotate yet', function() {
       mockedDomUtil.hasDeviceOrientation.andReturn(true);
       startAppAndFakeADeviceOrientationChangeTo(1);
@@ -92,11 +61,6 @@ describe('after app start', function() {
       expect(mockedDomUtil.rotate).not.toHaveBeenCalled();
     });
   });
-
-  function startApp() {
-    var app = new App(mockedDomUtil, mockedConvert);
-    app.start();
-  }
 
   function startAppAndFakeAScrollTo(scrollOffset) {
     var onScrollCallback;
@@ -112,6 +76,11 @@ describe('after app start', function() {
     mockedDomUtil.onDeviceOrientationChange.andCallFake(function(cb) { onDeviceOrienationChangeCallback = cb; });
     startApp();
     onDeviceOrienationChangeCallback && onDeviceOrienationChangeCallback(degrees);
+  }
+
+  function startApp() {
+    var app = new App(mockedDomUtil, mockedConvert);
+    app.start();
   }
 
 });

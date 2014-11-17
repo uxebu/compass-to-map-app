@@ -1,3 +1,6 @@
+var ScrollBehaviorApp = require('./scroll-behavior-app');
+var DeviceOrientationBehaviorApp = require('./deviceorientation-behavior-app');
+
 function App(domUtil, convert) {
   this._domUtil = domUtil;
   this._convert = convert;
@@ -14,27 +17,14 @@ App.prototype = {
 
   _connectEvents: function() {
     if (this._domUtil.hasDeviceOrientation()) {
-      this._domUtil.onDeviceOrientationChange(this._rotateByDeviceOrienationEvent.bind(this));
-      this._domUtil.showInputType(App.INPUT_TYPE_COMPASS);
+      new DeviceOrientationBehaviorApp(this._domUtil, this._convert).start();
     } else {
       this._hookUpScroll();
     }
   },
 
   _hookUpScroll: function() {
-    this._domUtil.onScroll(this._rotateByScrollPosition.bind(this));
-  },
-
-  _rotateByScrollPosition: function(scrollPos) {
-    this._rotateByDegrees(this._convert.scrollPositionToDegrees(scrollPos));
-  },
-
-  _rotateByDeviceOrienationEvent: function(event) {
-    this._rotateByDegrees(this._convert.deviceOrientationEventToDegrees(event));
-  },
-
-  _rotateByDegrees: function(degrees) {
-    this._domUtil.rotate(degrees);
+    new ScrollBehaviorApp(this._domUtil, this._convert).start();
   }
 };
 
