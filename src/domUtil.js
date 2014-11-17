@@ -17,6 +17,9 @@ var domUtil = {
   },
   showInputType: function(type) {
     jQuery('#inputType').html(type);
+  },
+  onPageLoaded: function(fn) {
+    jQuery(fn);
   }
 };
 
