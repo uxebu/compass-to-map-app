@@ -1,13 +1,15 @@
 var App = require('./app');
 var createDomUtilMock = require('./mocks/domUtilMockCreator');
-var mockedConvert = require('./mocks/convert');
+var createConvertMock = require('./mocks/convertMockCreator');
 
 describe('after app start', function() {
 
   var mockedDomUtil;
+  var mockedConvert;
 
   beforeEach(function() {
     mockedDomUtil = createDomUtilMock();
+    mockedConvert = createConvertMock();
   });
 
   it('rotate on scroll', function() {
