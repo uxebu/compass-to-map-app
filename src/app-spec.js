@@ -12,36 +12,57 @@ describe('after app start', function() {
     mockedConvert = createConvertMock();
   });
 
-  it('rotate on scroll', function() {
-    mockedDomUtil.hasDeviceOrientation.andReturn(false);
-    var scrollOffset = 42;
-    fakeAScrollTo(scrollOffset);
+  describe('and page was loaded', function() {
+    beforeEach(function() {
+      mockedDomUtil.onPageLoaded.andCallFake(function(fn) { fn(); })
+    });
 
-    expect(mockedDomUtil.rotate).toHaveBeenCalledWith(scrollOffset);
+    it('rotate on scroll', function() {
+      mockedDomUtil.hasDeviceOrientation.andReturn(false);
+      var scrollOffset = 42;
+      fakeAScrollTo(scrollOffset);
+
+      expect(mockedDomUtil.rotate).toHaveBeenCalledWith(scrollOffset);
+    });
+
+    it('rotate on deviceorientation change', function() {
+      mockedDomUtil.hasDeviceOrientation.andReturn(true);
+      var degrees = 23;
+      fakeADeviceOrientationChangeTo(degrees);
+
+      expect(mockedDomUtil.rotate).toHaveBeenCalledWith(degrees);
+    });
+
+    it('should only use deviceorientation if available', function() {
+      mockedDomUtil.hasDeviceOrientation.andReturn(true);
+
+      startApp();
+
+      expect(mockedDomUtil.onScroll).not.toHaveBeenCalled();
+    });
+
+    it('should inform the UI what event is being used', function() {
+      mockedDomUtil.hasDeviceOrientation.andReturn(true);
+
+      startApp();
+
+      expect(mockedDomUtil.showInputType).toHaveBeenCalledWith(App.INPUT_TYPE_COMPASS);
+    });
   });
 
-  it('rotate on deviceorientation change', function() {
-    mockedDomUtil.hasDeviceOrientation.andReturn(true);
-    var degrees = 23;
-    fakeADeviceOrientationChangeTo(degrees);
+  describe('if page has not been loaded yet', function() {
+    it('scrolling should not rotate yet', function() {
+      mockedDomUtil.hasDeviceOrientation.andReturn(false);
+      fakeAScrollTo(1);
 
-    expect(mockedDomUtil.rotate).toHaveBeenCalledWith(degrees);
-  });
+      expect(mockedDomUtil.rotate).not.toHaveBeenCalled();
+    });
+    it('deviceorientation should not rotate yet', function() {
+      mockedDomUtil.hasDeviceOrientation.andReturn(true);
+      fakeADeviceOrientationChangeTo(1);
 
-  it('should only use deviceorientation if available', function() {
-    mockedDomUtil.hasDeviceOrientation.andReturn(true);
-
-    startApp();
-
-    expect(mockedDomUtil.onScroll).not.toHaveBeenCalled();
-  });
-
-  it('should inform the UI what event is being used', function() {
-    mockedDomUtil.hasDeviceOrientation.andReturn(true);
-
-    startApp();
-
-    expect(mockedDomUtil.showInputType).toHaveBeenCalledWith(App.INPUT_TYPE_COMPASS);
+      expect(mockedDomUtil.rotate).not.toHaveBeenCalled();
+    });
   });
 
   function startApp() {

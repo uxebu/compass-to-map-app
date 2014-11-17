@@ -7,6 +7,10 @@ App.INPUT_TYPE_COMPASS = 'Compass';
 
 App.prototype = {
   start: function() {
+    this._domUtil.onPageLoaded(this._connectEvents.bind(this));
+  },
+
+  _connectEvents: function() {
     if (this._domUtil.hasDeviceOrientation()) {
       this._domUtil.onDeviceOrientationChange(this._rotateByDeviceOrienationEvent.bind(this));
       this._domUtil.showInputType(App.INPUT_TYPE_COMPASS);
