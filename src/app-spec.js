@@ -4,43 +4,37 @@ var mockedConvert = require('./mocks/convert');
 
 describe('after app start', function() {
 
-  function startApp() {
-    var app = new App(mockedDomUtil, mockedConvert);
-    app.start();
-  }
+  it('rotate on scroll', function() {
+    var scrollOffset = 42;
+    mockedConvert.scrollPositionToDegrees.andReturn(scrollOffset);
 
-  describe('rotate on scroll', function() {
+    fakeAScrollTo(scrollOffset);
 
-    function fakeAScrollTo(degrees) {
-      mockedDomUtil.onScroll.andCallFake(function(cb) { cb(degrees); });
-      startApp();
-    }
-
-    it('when onScroll fires from the DOM it shall rotate', function() {
-      var scrollOffset = 42;
-      mockedConvert.scrollPositionToDegrees.andReturn(scrollOffset);
-
-      fakeAScrollTo(scrollOffset);
-
-      expect(mockedDomUtil.rotate).toHaveBeenCalledWith(scrollOffset);
-    });
+    expect(mockedDomUtil.rotate).toHaveBeenCalledWith(scrollOffset);
   });
 
+  it('rotate on deviceorientation change', function() {
+    var degrees = 23;
+    mockedConvert.deviceOrientationEventToDegrees.andReturn(degrees);
 
-  describe('rotate on deviceorientation change', function() {
+    fakeADeviceOrientationChangeTo(degrees);
 
-    function fakeADeviceOrientationChangeTo(degrees) {
-      mockedDomUtil.onDeviceOrientationChange.andCallFake(function(cb) { cb(degrees); });
-      startApp();
-    }
-
-    it('when event fires from the DOM it shall rotate', function() {
-      var degrees = 42;
-      mockedConvert.deviceOrientationEventToDegrees.andReturn(degrees);
-
-      fakeADeviceOrientationChangeTo(degrees);
-
-      expect(mockedDomUtil.rotate).toHaveBeenCalledWith(degrees);
-    });
+    expect(mockedDomUtil.rotate).toHaveBeenCalledWith(degrees);
   });
 });
+
+function startApp() {
+  var app = new App(mockedDomUtil, mockedConvert);
+  app.start();
+}
+
+function fakeAScrollTo(degrees) {
+  mockedDomUtil.onScroll.andCallFake(function(cb) { cb(degrees); });
+  startApp();
+}
+
+function fakeADeviceOrientationChangeTo(degrees) {
+  mockedDomUtil.onDeviceOrientationChange.andCallFake(function(cb) { cb(degrees); });
+  startApp();
+}
+
