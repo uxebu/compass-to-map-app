@@ -1,5 +1,5 @@
 var App = require('./app');
-var createDomUtilMock = require('./mocks/domUtil');
+var createDomUtilMock = require('./mocks/domUtilMockCreator');
 var mockedConvert = require('./mocks/convert');
 
 describe('after app start', function() {
