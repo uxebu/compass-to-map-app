@@ -1,6 +1,5 @@
-var convert = {
-  scrollPositionToDegrees: function() {},
-  deviceOrientationEventToDegrees: function() {}
-};
-
-module.exports = convert;
+var methodNames = [
+  'scrollPositionToDegrees',
+  'deviceOrientationEventToDegrees'
+];
+module.exports = jasmine.createSpyObj('convert', methodNames);

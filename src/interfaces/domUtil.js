@@ -1,7 +1,6 @@
-var domUtil = {
-  onScroll: function() {},
-  onDeviceOrientationChange: function() {},
-  rotate: function() {}
-};
-
-module.exports = domUtil;
+var methodNames = [
+  'onScroll',
+  'onDeviceOrientationChange',
+  'rotate'
+];
+module.exports = jasmine.createSpyObj('domUtil', methodNames)
