@@ -1,4 +1,5 @@
 var App = require('./app');
+var mockedDomUtil = require('./mocks/domUtil');
 
 var convert = {
   scrollPositionToDegrees: function(scrollPosition) {
@@ -9,27 +10,21 @@ var convert = {
   }
 };
 
-var domUtil = {
-  onScroll: function() {},
-  onDeviceOrientationChange: function() {},
-  rotate: function() {}
-};
-
 describe('after app start', function() {
 
   beforeEach(function() {
-    spyOn(domUtil, 'rotate');
+    spyOn(mockedDomUtil, 'rotate');
   });
 
   function startApp() {
-    var app = new App(domUtil, convert);
+    var app = new App(mockedDomUtil, convert);
     app.start();
   }
 
   describe('rotate on scroll', function() {
     var onScrollCallback;
     beforeEach(function() {
-      spyOn(domUtil, 'onScroll').andCallFake(function(cb) { onScrollCallback = cb; });
+      spyOn(mockedDomUtil, 'onScroll').andCallFake(function(cb) { onScrollCallback = cb; });
     });
 
     function fakeOnScrollCallback(degrees) {
@@ -43,7 +38,7 @@ describe('after app start', function() {
       startApp();
       fakeOnScrollCallback(degrees);
 
-      expect(domUtil.rotate).toHaveBeenCalledWith(degrees);
+      expect(mockedDomUtil.rotate).toHaveBeenCalledWith(degrees);
     });
 
     it('should convert scroll position to degrees', function() {
@@ -54,7 +49,7 @@ describe('after app start', function() {
       startApp();
       fakeOnScrollCallback(scrollPosition);
 
-      expect(domUtil.rotate).toHaveBeenCalledWith(expected);
+      expect(mockedDomUtil.rotate).toHaveBeenCalledWith(expected);
     });
   });
 
@@ -62,7 +57,7 @@ describe('after app start', function() {
   describe('rotate on deviceorientation change', function() {
     var onDeviceOrientationChangeCallback;
     beforeEach(function() {
-      spyOn(domUtil, 'onDeviceOrientationChange').andCallFake(function(cb) { onDeviceOrientationChangeCallback = cb; });
+      spyOn(mockedDomUtil, 'onDeviceOrientationChange').andCallFake(function(cb) { onDeviceOrientationChangeCallback = cb; });
     });
 
     function fakeOnDeviceOrientationChangeCallback(degrees) {
@@ -76,7 +71,7 @@ describe('after app start', function() {
       startApp();
       fakeOnDeviceOrientationChangeCallback(degrees);
 
-      expect(domUtil.rotate).toHaveBeenCalledWith(degrees);
+      expect(mockedDomUtil.rotate).toHaveBeenCalledWith(degrees);
     });
     it('should convert deviceorientation event to degrees', function() {
       var degrees = 42;
@@ -86,7 +81,7 @@ describe('after app start', function() {
       startApp();
       fakeOnDeviceOrientationChangeCallback(event);
 
-      expect(domUtil.rotate).toHaveBeenCalledWith(expected);
+      expect(mockedDomUtil.rotate).toHaveBeenCalledWith(expected);
     });
   });
 });
