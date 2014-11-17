@@ -20,7 +20,8 @@ describe('after app start', function() {
     it('rotate on scroll', function() {
       mockedDomUtil.hasDeviceOrientation.andReturn(false);
       var scrollOffset = 42;
-      fakeAScrollTo(scrollOffset);
+
+      startAppAndFakeAScrollTo(scrollOffset);
 
       expect(mockedDomUtil.rotate).toHaveBeenCalledWith(scrollOffset);
     });
@@ -28,7 +29,7 @@ describe('after app start', function() {
     it('rotate on deviceorientation change', function() {
       mockedDomUtil.hasDeviceOrientation.andReturn(true);
       var degrees = 23;
-      fakeADeviceOrientationChangeTo(degrees);
+      startAppAndFakeADeviceOrientationChangeTo(degrees);
 
       expect(mockedDomUtil.rotate).toHaveBeenCalledWith(degrees);
     });
@@ -79,13 +80,14 @@ describe('after app start', function() {
   describe('if page has not been loaded yet', function() {
     it('scrolling should not rotate yet', function() {
       mockedDomUtil.hasDeviceOrientation.andReturn(false);
-      fakeAScrollTo(1);
+
+      startAppAndFakeAScrollTo(1);
 
       expect(mockedDomUtil.rotate).not.toHaveBeenCalled();
     });
     it('deviceorientation should not rotate yet', function() {
       mockedDomUtil.hasDeviceOrientation.andReturn(true);
-      fakeADeviceOrientationChangeTo(1);
+      startAppAndFakeADeviceOrientationChangeTo(1);
 
       expect(mockedDomUtil.rotate).not.toHaveBeenCalled();
     });
@@ -96,7 +98,7 @@ describe('after app start', function() {
     app.start();
   }
 
-  function fakeAScrollTo(scrollOffset) {
+  function startAppAndFakeAScrollTo(scrollOffset) {
     var onScrollCallback;
     mockedConvert.scrollPositionToDegrees.andReturn(scrollOffset);
     mockedDomUtil.onScroll.andCallFake(function(cb) { onScrollCallback = cb; });
@@ -104,7 +106,7 @@ describe('after app start', function() {
     onScrollCallback && onScrollCallback(scrollOffset);
   }
 
-  function fakeADeviceOrientationChangeTo(degrees) {
+  function startAppAndFakeADeviceOrientationChangeTo(degrees) {
     var onDeviceOrienationChangeCallback;
     mockedConvert.deviceOrientationEventToDegrees.andReturn(degrees);
     mockedDomUtil.onDeviceOrientationChange.andCallFake(function(cb) { onDeviceOrienationChangeCallback = cb; });
