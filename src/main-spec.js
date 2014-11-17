@@ -33,7 +33,6 @@ describe('after app start', function() {
     var onScrollCallback;
     beforeEach(function() {
       spyOn(domUtil, 'onScroll').andCallFake(function(cb) { onScrollCallback = cb; });
-      spyOn(convert, 'scrollPositionToDegrees');
     });
 
     function fakeOnScrollCallback(degrees) {
@@ -42,7 +41,7 @@ describe('after app start', function() {
 
     it('when onScroll fires from the DOM it shall rotate', function() {
       var degrees = 42;
-      convert.scrollPositionToDegrees.andReturn(degrees);
+      spyOn(convert, 'scrollPositionToDegrees').andReturn(degrees);
 
       app.start();
       fakeOnScrollCallback(degrees);
@@ -52,10 +51,11 @@ describe('after app start', function() {
 
     it('should convert scroll position to degrees', function() {
       var degrees = 42;
-      var expected = convert.scrollPositionToDegrees({top: degrees});
+      var scrollPosition = {top: degrees};
+      var expected = convert.scrollPositionToDegrees(scrollPosition);
 
       app.start();
-      fakeOnScrollCallback(degrees);
+      fakeOnScrollCallback(scrollPosition);
 
       expect(domUtil.rotate).toHaveBeenCalledWith(expected);
     });
