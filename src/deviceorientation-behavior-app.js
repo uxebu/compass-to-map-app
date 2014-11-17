@@ -12,11 +12,17 @@ DeviceOrientationBehaviorApp.prototype = {
   },
 
   _rotateByDeviceOrienationEvent: function(event) {
+    this._hasReceivedEvent = true;
     this._rotateByDegrees(this._convert.deviceOrientationEventToDegrees(event));
   },
 
   _rotateByDegrees: function(degrees) {
     this._domUtil.rotate(degrees);
+  },
+
+  _hasReceivedEvent: false,
+  hasReceivedEventLately: function() {
+    return this._hasReceivedEvent;
   }
 };
 

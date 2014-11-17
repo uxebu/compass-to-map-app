@@ -6,6 +6,7 @@ describe('after app start', function() {
 
   var mockedDomUtil;
   var mockedConvert;
+  var app;
 
   beforeEach(function() {
     mockedDomUtil = createDomUtilMock();
@@ -28,13 +29,18 @@ describe('after app start', function() {
     expect(mockedDomUtil.showInputType).toHaveBeenCalledWith(DeviceOrientationBehaviorApp.INPUT_TYPE);
   });
 
-
-
-
-
+  describe('hasReceievedEventLately', function() {
+    it('should report FALSE if NO events have been received in the given interval', function() {
+      expect(app.hasReceivedEventLately(0)).toBe(false);
+    });
+    it('should report TRUE if events have been received in the given interval', function() {
+      startAppAndFakeADeviceOrientationChangeTo(1);
+      expect(app.hasReceivedEventLately(0)).toBe(true);
+    });
+  });
 
   function startApp() {
-    var app = new DeviceOrientationBehaviorApp(mockedDomUtil, mockedConvert);
+    app = new DeviceOrientationBehaviorApp(mockedDomUtil, mockedConvert);
     app.start();
   }
 
