@@ -11,7 +11,7 @@ var app = {
   }
 };
 
-describe('rotate on an event', function() {
+describe('on app start rotate on an event', function() {
 
   beforeEach(function() {
     spyOn(domUtil, 'rotate');
@@ -28,17 +28,18 @@ describe('rotate on an event', function() {
     });
 
     function callOnScrollCallback(degrees) {
-      app.start();
       onScrollCallback(degrees);
     }
 
     it('should be triggered', function() {
       var degrees = 42;
+      app.start();
       callOnScrollCallback(degrees);
       expect(domUtil.rotate).toHaveBeenCalledWith(degrees);
     });
     it('when onScroll fires from the DOM it shall rotate', function() {
       var degrees = 42;
+      app.start();
       callOnScrollCallback(degrees);
       expect(domUtil.rotate).toHaveBeenCalledWith(degrees);
     });
