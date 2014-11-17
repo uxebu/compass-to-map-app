@@ -1,10 +1,5 @@
 var App = require('./app');
-
-var domUtil = {
-  rotate: function() {},
-  onScroll: function() {},
-  onDeviceOrientationChange: function() {}
-};
+var domUtil = require('./domUtil');
 
 var convert = {
   scrollPositionToDegrees: function(scrollPosition) {
