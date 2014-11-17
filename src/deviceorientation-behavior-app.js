@@ -1,6 +1,7 @@
-function DeviceOrientationBehaviorApp(domUtil, convert) {
+function DeviceOrientationBehaviorApp(domUtil, convert, timeUtil) {
   this._domUtil = domUtil;
   this._convert = convert;
+  this._timeUtil = timeUtil;
 }
 
 DeviceOrientationBehaviorApp.INPUT_TYPE = 'Compass';
@@ -12,7 +13,7 @@ DeviceOrientationBehaviorApp.prototype = {
   },
 
   _rotateByDeviceOrienationEvent: function(event) {
-    this._hasReceivedEvent = true;
+    this._lastEventTimestamp = new Date();
     this._rotateByDegrees(this._convert.deviceOrientationEventToDegrees(event));
   },
 
@@ -20,9 +21,12 @@ DeviceOrientationBehaviorApp.prototype = {
     this._domUtil.rotate(degrees);
   },
 
-  _hasReceivedEvent: false,
-  hasReceivedEventLately: function() {
-    return this._hasReceivedEvent;
+  _lastEventTimestamp: null,
+  hasReceivedEventLately: function(timeSince) {
+    if (this._lastEventTimestamp == null) {
+      return false;
+    }
+    return this._timeUtil.timePassedSince(this._lastEventTimestamp) <= timeSince;
   }
 };
 
