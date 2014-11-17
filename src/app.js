@@ -4,7 +4,7 @@ function App(domUtil, scrollApp, deviceRotationApp) {
   this._deviceRotationApp = deviceRotationApp;
 }
 
-App.TYPE_SWITCH_TIMEOUT = 10000;
+App.TYPE_SWITCH_TIMEOUT = 2*1000;
 
 App.prototype = {
   start: function() {
