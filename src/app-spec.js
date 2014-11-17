@@ -97,15 +97,19 @@ describe('after app start', function() {
   }
 
   function fakeAScrollTo(scrollOffset) {
+    var onScrollCallback;
     mockedConvert.scrollPositionToDegrees.andReturn(scrollOffset);
-    mockedDomUtil.onScroll.andCallFake(function(cb) { cb(scrollOffset); });
+    mockedDomUtil.onScroll.andCallFake(function(cb) { onScrollCallback = cb; });
     startApp();
+    onScrollCallback && onScrollCallback(scrollOffset);
   }
 
   function fakeADeviceOrientationChangeTo(degrees) {
+    var onDeviceOrienationChangeCallback;
     mockedConvert.deviceOrientationEventToDegrees.andReturn(degrees);
-    mockedDomUtil.onDeviceOrientationChange.andCallFake(function(cb) { cb(degrees); });
+    mockedDomUtil.onDeviceOrientationChange.andCallFake(function(cb) { onDeviceOrienationChangeCallback = cb; });
     startApp();
+    onDeviceOrienationChangeCallback && onDeviceOrienationChangeCallback(degrees);
   }
 
 });
