@@ -6,9 +6,6 @@ function App(domUtil, convert) {
   this._convert = convert;
 }
 
-App.INPUT_TYPE_COMPASS = 'Compass';
-App.DEVICEORIENTAION_TIMEOUT = 10*1000;
-
 App.prototype = {
   start: function() {
     this._domUtil.onPageLoaded(this._connectEvents.bind(this));
@@ -18,12 +15,8 @@ App.prototype = {
     if (this._domUtil.hasDeviceOrientation()) {
       new DeviceOrientationBehaviorApp(this._domUtil, this._convert).start();
     } else {
-      this._hookUpScroll();
+      new ScrollBehaviorApp(this._domUtil, this._convert).start();
     }
-  },
-
-  _hookUpScroll: function() {
-    new ScrollBehaviorApp(this._domUtil, this._convert).start();
   }
 };
 

@@ -13,26 +13,18 @@ describe('after app start', function() {
   });
 
   it('rotate on deviceorientation change', function() {
-    mockedDomUtil.hasDeviceOrientation.andReturn(true);
     var degrees = 23;
     startAppAndFakeADeviceOrientationChangeTo(degrees);
-
     expect(mockedDomUtil.rotate).toHaveBeenCalledWith(degrees);
   });
 
-  it('should only use deviceorientation if available', function() {
-    mockedDomUtil.hasDeviceOrientation.andReturn(true);
-
+  it('should not act on scroll', function() {
     startApp();
-
     expect(mockedDomUtil.onScroll).not.toHaveBeenCalled();
   });
 
   it('should inform the UI what event is being used', function() {
-    mockedDomUtil.hasDeviceOrientation.andReturn(true);
-
     startApp();
-
     expect(mockedDomUtil.showInputType).toHaveBeenCalledWith(DeviceOrientationBehaviorApp.INPUT_TYPE_COMPASS);
   });
 
@@ -46,7 +38,7 @@ describe('after app start', function() {
     mockedConvert.deviceOrientationEventToDegrees.andReturn(degrees);
     mockedDomUtil.onDeviceOrientationChange.andCallFake(function(cb) { onDeviceOrienationChangeCallback = cb; });
     startApp();
-    onDeviceOrienationChangeCallback && onDeviceOrienationChangeCallback(degrees);
+    onDeviceOrienationChangeCallback(degrees);
   }
 
 });

@@ -56,6 +56,7 @@ describe('after app start', function() {
 
     it('deviceorientation should not rotate yet', function() {
       mockedDomUtil.hasDeviceOrientation.andReturn(true);
+
       startAppAndFakeADeviceOrientationChangeTo(1);
 
       expect(mockedDomUtil.rotate).not.toHaveBeenCalled();
