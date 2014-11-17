@@ -6,14 +6,14 @@ var domUtil = {
 
 var app = {
   start: function() {
-    domUtil.onScroll(function(degrees) {
-      domUtil.rotate(degrees);
-    });
-    domUtil.onDeviceOrientationChange(function(degrees) {
-      domUtil.rotate(degrees);
-    });
+    domUtil.onScroll(rotateByDegrees);
+    domUtil.onDeviceOrientationChange(rotateByDegrees);
   }
 };
+
+function rotateByDegrees(degrees) {
+  domUtil.rotate(degrees);
+}
 
 describe('on app start rotate on an event', function() {
 
