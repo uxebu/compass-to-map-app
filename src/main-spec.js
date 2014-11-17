@@ -31,12 +31,6 @@ describe('on app start rotate on an event', function() {
       onScrollCallback(degrees);
     }
 
-    it('should be triggered', function() {
-      var degrees = 42;
-      app.start();
-      callOnScrollCallback(degrees);
-      expect(domUtil.rotate).toHaveBeenCalledWith(degrees);
-    });
     it('when onScroll fires from the DOM it shall rotate', function() {
       var degrees = 42;
       app.start();
@@ -53,7 +47,7 @@ describe('on app start rotate on an event', function() {
     function callOnDeviceOrientationChangeCallback(degrees) {
       onDeviceOrientationChangeCallback(degrees);
     }
-    
+
     it('when event fires from the DOM it shall rotate', function() {
       var degrees = 42;
       app.start();
