@@ -32,6 +32,10 @@ describe('after app start', function() {
     expect(mockedDomUtil.showInputType).toHaveBeenCalledWith(DeviceOrientationBehaviorApp.INPUT_TYPE);
   });
 
+  xit('should not rotate if alpha=null', function() {
+    expect(true).toBe(false);
+  });
+
   describe('hasReceievedEventLately', function() {
 
     describe('should report FALSE', function() {
