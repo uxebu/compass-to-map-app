@@ -10,43 +10,35 @@ describe('after app start', function() {
   }
 
   describe('rotate on scroll', function() {
-    var onScrollCallback;
-    beforeEach(function() {
-      mockedDomUtil.onScroll.andCallFake(function(cb) { onScrollCallback = cb; });
-    });
 
-    function fakeOnScrollCallback(degrees) {
-      onScrollCallback(degrees);
+    function fakeAScrollTo(degrees) {
+      mockedDomUtil.onScroll.andCallFake(function(cb) { cb(degrees); });
+      startApp();
     }
 
     it('when onScroll fires from the DOM it shall rotate', function() {
-      var degrees = 42;
-      mockedConvert.scrollPositionToDegrees.andReturn(degrees);
+      var scrollOffset = 42;
+      mockedConvert.scrollPositionToDegrees.andReturn(scrollOffset);
 
-      startApp();
-      fakeOnScrollCallback(degrees);
+      fakeAScrollTo(scrollOffset);
 
-      expect(mockedDomUtil.rotate).toHaveBeenCalledWith(degrees);
+      expect(mockedDomUtil.rotate).toHaveBeenCalledWith(scrollOffset);
     });
   });
 
 
   describe('rotate on deviceorientation change', function() {
-    var onDeviceOrientationChangeCallback;
-    beforeEach(function() {
-      mockedDomUtil.onDeviceOrientationChange.andCallFake(function(cb) { onDeviceOrientationChangeCallback = cb; });
-    });
 
-    function fakeOnDeviceOrientationChangeCallback(degrees) {
-      onDeviceOrientationChangeCallback(degrees);
+    function fakeADeviceOrientationChangeTo(degrees) {
+      mockedDomUtil.onDeviceOrientationChange.andCallFake(function(cb) { cb(degrees); });
+      startApp();
     }
 
     it('when event fires from the DOM it shall rotate', function() {
       var degrees = 42;
       mockedConvert.deviceOrientationEventToDegrees.andReturn(degrees);
 
-      startApp();
-      fakeOnDeviceOrientationChangeCallback(degrees);
+      fakeADeviceOrientationChangeTo(degrees);
 
       expect(mockedDomUtil.rotate).toHaveBeenCalledWith(degrees);
     });
