@@ -1,5 +1,4 @@
 var App = require('./app');
-var domUtil = require('./domUtil');
 
 var convert = {
   scrollPositionToDegrees: function(scrollPosition) {
@@ -8,6 +7,12 @@ var convert = {
   deviceOrientationEventToDegrees: function(event) {
     return event.alpha;
   }
+};
+
+var domUtil = {
+  onScroll: function() {},
+  onDeviceOrientationChange: function() {},
+  rotate: function() {}
 };
 
 describe('after app start', function() {
