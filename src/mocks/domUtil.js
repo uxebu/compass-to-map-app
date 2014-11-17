@@ -1,6 +1,12 @@
 var methodNames = [
   'onScroll',
   'onDeviceOrientationChange',
-  'rotate'
+  'rotate',
+  'hasDeviceOrientation'
 ];
-module.exports = jasmine.createSpyObj('domUtil', methodNames)
+
+function createMock() {
+  return jasmine.createSpyObj('domUtil', methodNames);
+}
+
+module.exports = createMock;
