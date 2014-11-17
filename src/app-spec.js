@@ -40,17 +40,6 @@ describe('after app start', function() {
 
       expect(mockedDomUtil.rotate).toHaveBeenCalledWith(degrees);
     });
-
-    it('should convert scroll position to degrees', function() {
-      var degrees = 42;
-      var scrollPosition = {top: degrees};
-      var expected = convert.scrollPositionToDegrees(scrollPosition);
-
-      startApp();
-      fakeOnScrollCallback(scrollPosition);
-
-      expect(mockedDomUtil.rotate).toHaveBeenCalledWith(expected);
-    });
   });
 
 
@@ -72,16 +61,6 @@ describe('after app start', function() {
       fakeOnDeviceOrientationChangeCallback(degrees);
 
       expect(mockedDomUtil.rotate).toHaveBeenCalledWith(degrees);
-    });
-    it('should convert deviceorientation event to degrees', function() {
-      var degrees = 42;
-      var event = {alpha: degrees};
-      var expected = convert.deviceOrientationEventToDegrees(event);
-
-      startApp();
-      fakeOnDeviceOrientationChangeCallback(event);
-
-      expect(mockedDomUtil.rotate).toHaveBeenCalledWith(expected);
     });
   });
 });
