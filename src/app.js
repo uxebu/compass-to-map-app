@@ -12,7 +12,6 @@ App.DEVICEORIENTAION_TIMEOUT = 10*1000;
 App.prototype = {
   start: function() {
     this._domUtil.onPageLoaded(this._connectEvents.bind(this));
-    setTimeout(this._hookUpScroll.bind(this), App.DEVICEORIENTAION_TIMEOUT);
   },
 
   _connectEvents: function() {

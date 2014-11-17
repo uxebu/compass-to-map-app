@@ -18,7 +18,7 @@ describe('after app start', function() {
       mockedDomUtil.onPageLoaded.andCallFake(function(fn) { fn(); })
     });
 
-    describe('switch back to scroll if deviceorientation doesnt change', function() {
+    xdescribe('switch back to scroll if deviceorientation doesnt change', function() {
       it('should switch after given interval', function() {
         jasmine.Clock.useMock();
         mockedDomUtil.hasDeviceOrientation.andReturn(true);
