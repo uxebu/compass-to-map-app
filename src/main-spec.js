@@ -1,23 +1,49 @@
 var domUtil = {
-  rotate: function() {}
+  rotate: function() {},
+  onScroll: function() {}
 };
-function emulateDocumentScrollEvent(degrees) {
-  domUtil.rotate(degrees);
-}
-function emulateDeviceOrientationChange(degrees) {
-  domUtil.rotate(degrees);
-}
+
+var app = {
+  start: function() {
+    domUtil.onScroll(function(degrees) {
+      domUtil.rotate(degrees);
+    });
+  }
+};
 
 describe('rotate on an event', function() {
-  it('should be triggered on scroll', function() {
-    var degrees = 42;
+
+  var onScrollCallback;
+  beforeEach(function() {
     spyOn(domUtil, 'rotate');
-    emulateDocumentScrollEvent(degrees);
-    expect(domUtil.rotate).toHaveBeenCalledWith(degrees);
+    spyOn(domUtil, 'onScroll').andCallFake(function(cb) { onScrollCallback = cb; });
+  });
+
+  function emulateDocumentScrollEvent(degrees) {
+    domUtil.rotate(degrees);
+  }
+  function emulateDeviceOrientationChange(degrees) {
+    domUtil.rotate(degrees);
+  }
+  function callOnScrollCallback(degrees) {
+    app.start();
+    onScrollCallback(degrees);
+  }
+
+  describe('on scroll', function() {
+    it('should be triggered', function() {
+      var degrees = 42;
+      emulateDocumentScrollEvent(degrees);
+      expect(domUtil.rotate).toHaveBeenCalledWith(degrees);
+    });
+    it('when onScroll fires from the DOM it shall rotate', function() {
+      var degrees = 42;
+      callOnScrollCallback(degrees);
+      expect(domUtil.rotate).toHaveBeenCalledWith(degrees);
+    });
   });
   it('should be triggered on deviceorientation change', function() {
     var degrees = 42;
-    spyOn(domUtil, 'rotate');
     emulateDeviceOrientationChange(degrees);
     expect(domUtil.rotate).toHaveBeenCalledWith(degrees);
   });
