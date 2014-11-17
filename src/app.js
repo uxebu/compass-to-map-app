@@ -25,6 +25,7 @@ App.prototype = {
     var scrollApp = this._scrollApp;
     setTimeout(function() {
       if (!deviceRotationApp.hasReceivedEventLately(App.TYPE_SWITCH_TIMEOUT)) {
+        deviceRotationApp.stop();
         scrollApp.start();
       }
     }, App.TYPE_SWITCH_TIMEOUT);
