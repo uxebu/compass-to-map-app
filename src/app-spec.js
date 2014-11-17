@@ -48,6 +48,32 @@ describe('after app start', function() {
 
       expect(mockedDomUtil.showInputType).toHaveBeenCalledWith(App.INPUT_TYPE_COMPASS);
     });
+
+    describe('switch back to scroll if deviceorientation doesnt change', function() {
+      it('should switch after given interval', function() {
+        jasmine.Clock.useMock();
+        mockedDomUtil.hasDeviceOrientation.andReturn(true);
+
+        var scrollCb;
+        mockedDomUtil.onScroll.andCallFake(function(cb) { scrollCb = cb; });
+        startApp();
+        jasmine.Clock.tick(App.DEVICEORIENTAION_TIMEOUT); // forward clock by timeout
+
+        var scrollOffset = 42;
+        mockedConvert.scrollPositionToDegrees.andReturn(scrollOffset);
+        scrollCb(scrollOffset);
+
+        expect(mockedDomUtil.rotate).toHaveBeenCalledWith(scrollOffset);
+      });
+      it('should update the input type shown', function() {
+        
+        //expect(mockedDomUtil.showInputType).toHaveBeenCalledWith(App.INPUT_TYPE_SCROLL);
+      });
+      it('should disconnect the deviceorientation hook', function() {
+
+      });
+    });
+
   });
 
   describe('if page has not been loaded yet', function() {
