@@ -1,15 +1,23 @@
 var App = require('./app');
 var createDomUtilMock = require('./mocks/domUtilMockCreator');
-var createConvertMock = require('./mocks/convertMockCreator');
+
+function FakeApp() {}
+FakeApp.prototype = {
+  start: function() {}
+};
 
 describe('after app start', function() {
 
   var mockedDomUtil;
-  var mockedConvert;
+  var scrollApp;
+  var deviceRotationApp;
 
   beforeEach(function() {
     mockedDomUtil = createDomUtilMock();
-    mockedConvert = createConvertMock();
+    scrollApp = new FakeApp();
+    spyOn(scrollApp, 'start');
+    deviceRotationApp = new FakeApp();
+    spyOn(deviceRotationApp, 'start')
   });
 
   describe('and page was loaded', function() {
@@ -18,20 +26,24 @@ describe('after app start', function() {
       mockedDomUtil.onPageLoaded.andCallFake(function(fn) { fn(); })
     });
 
+    it('should start the scroll app yet', function() {
+      mockedDomUtil.hasDeviceOrientation.andReturn(false);
+
+      startApp();
+
+      expect(scrollApp.start).toHaveBeenCalled();
+    });
+
+    it('deviceorientation should not rotate yet', function() {
+      mockedDomUtil.hasDeviceOrientation.andReturn(true);
+
+      startApp();
+
+      expect(deviceRotationApp.start).toHaveBeenCalled();
+    });
+
     xdescribe('switch back to scroll if deviceorientation doesnt change', function() {
       it('should switch after given interval', function() {
-        jasmine.Clock.useMock();
-        mockedDomUtil.hasDeviceOrientation.andReturn(true);
-
-        var scrollCb;
-        mockedDomUtil.onScroll.andCallFake(function(cb) { scrollCb = cb; });
-        startApp();
-        jasmine.Clock.tick(App.DEVICEORIENTAION_TIMEOUT); // forward clock by timeout
-
-        var scrollOffset = 42;
-        mockedConvert.scrollPositionToDegrees.andReturn(scrollOffset);
-        scrollCb(scrollOffset);
-
         expect(mockedDomUtil.rotate).toHaveBeenCalledWith(scrollOffset);
       });
       it('should update the input type shown', function() {
@@ -46,41 +58,25 @@ describe('after app start', function() {
   });
 
   describe('if page has not been loaded yet', function() {
-    it('scrolling should not rotate yet', function() {
+    it('should not start the scroll app yet', function() {
       mockedDomUtil.hasDeviceOrientation.andReturn(false);
 
-      startAppAndFakeAScrollTo(1);
+      startApp();
 
-      expect(mockedDomUtil.rotate).not.toHaveBeenCalled();
+      expect(scrollApp.start).not.toHaveBeenCalled();
     });
 
     it('deviceorientation should not rotate yet', function() {
       mockedDomUtil.hasDeviceOrientation.andReturn(true);
 
-      startAppAndFakeADeviceOrientationChangeTo(1);
+      startApp();
 
-      expect(mockedDomUtil.rotate).not.toHaveBeenCalled();
+      expect(deviceRotationApp.start).not.toHaveBeenCalled();
     });
   });
 
-  function startAppAndFakeAScrollTo(scrollOffset) {
-    var onScrollCallback;
-    mockedConvert.scrollPositionToDegrees.andReturn(scrollOffset);
-    mockedDomUtil.onScroll.andCallFake(function(cb) { onScrollCallback = cb; });
-    startApp();
-    onScrollCallback && onScrollCallback(scrollOffset);
-  }
-
-  function startAppAndFakeADeviceOrientationChangeTo(degrees) {
-    var onDeviceOrienationChangeCallback;
-    mockedConvert.deviceOrientationEventToDegrees.andReturn(degrees);
-    mockedDomUtil.onDeviceOrientationChange.andCallFake(function(cb) { onDeviceOrienationChangeCallback = cb; });
-    startApp();
-    onDeviceOrienationChangeCallback && onDeviceOrienationChangeCallback(degrees);
-  }
-
   function startApp() {
-    var app = new App(mockedDomUtil, mockedConvert);
+    var app = new App(mockedDomUtil, scrollApp, deviceRotationApp);
     app.start();
   }
 

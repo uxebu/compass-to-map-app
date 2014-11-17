@@ -1,9 +1,7 @@
-var ScrollBehaviorApp = require('./scroll-behavior-app');
-var DeviceOrientationBehaviorApp = require('./deviceorientation-behavior-app');
-
-function App(domUtil, convert) {
+function App(domUtil, scrollApp, deviceRotationApp) {
   this._domUtil = domUtil;
-  this._convert = convert;
+  this._scrollApp = scrollApp;
+  this._deviceRotationApp = deviceRotationApp;
 }
 
 App.prototype = {
@@ -13,9 +11,9 @@ App.prototype = {
 
   _connectEvents: function() {
     if (this._domUtil.hasDeviceOrientation()) {
-      new DeviceOrientationBehaviorApp(this._domUtil, this._convert).start();
+      this._deviceRotationApp.start();
     } else {
-      new ScrollBehaviorApp(this._domUtil, this._convert).start();
+      this._scrollApp.start();
     }
   }
 };

@@ -28,6 +28,11 @@ describe('after app start', function() {
     expect(mockedDomUtil.showInputType).toHaveBeenCalledWith(DeviceOrientationBehaviorApp.INPUT_TYPE_COMPASS);
   });
 
+
+
+
+
+
   function startApp() {
     var app = new DeviceOrientationBehaviorApp(mockedDomUtil, mockedConvert);
     app.start();
