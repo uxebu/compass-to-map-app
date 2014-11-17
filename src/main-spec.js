@@ -4,7 +4,8 @@ var domUtil = {
   onDeviceOrientationChange: function() {}
 };
 
-var app = {
+function App() {}
+App.prototype = {
   start: function() {
     domUtil.onScroll(function(scrollPos) {
       rotateByDegrees(convert.scrollPositionToDegrees(scrollPos));
@@ -34,6 +35,11 @@ describe('after app start', function() {
     spyOn(domUtil, 'rotate');
   });
 
+  function startApp() {
+    var app = new App();
+    app.start();
+  }
+
   describe('rotate on scroll', function() {
     var onScrollCallback;
     beforeEach(function() {
@@ -48,7 +54,7 @@ describe('after app start', function() {
       var degrees = 42;
       spyOn(convert, 'scrollPositionToDegrees').andReturn(degrees);
 
-      app.start();
+      startApp();
       fakeOnScrollCallback(degrees);
 
       expect(domUtil.rotate).toHaveBeenCalledWith(degrees);
@@ -59,7 +65,7 @@ describe('after app start', function() {
       var scrollPosition = {top: degrees};
       var expected = convert.scrollPositionToDegrees(scrollPosition);
 
-      app.start();
+      startApp();
       fakeOnScrollCallback(scrollPosition);
 
       expect(domUtil.rotate).toHaveBeenCalledWith(expected);
@@ -81,7 +87,7 @@ describe('after app start', function() {
       var degrees = 42;
       spyOn(convert, 'deviceOrientationEventToDegrees').andReturn(degrees);
 
-      app.start();
+      startApp();
       fakeOnDeviceOrientationChangeCallback(degrees);
 
       expect(domUtil.rotate).toHaveBeenCalledWith(degrees);
@@ -91,7 +97,7 @@ describe('after app start', function() {
       var event = {alpha: degrees};
       var expected = convert.deviceOrientationEventToDegrees(event);
 
-      app.start();
+      startApp();
       fakeOnDeviceOrientationChangeCallback(event);
 
       expect(domUtil.rotate).toHaveBeenCalledWith(expected);
