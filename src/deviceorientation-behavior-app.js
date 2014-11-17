@@ -3,12 +3,12 @@ function DeviceOrientationBehaviorApp(domUtil, convert) {
   this._convert = convert;
 }
 
-DeviceOrientationBehaviorApp.INPUT_TYPE_COMPASS = 'Compass';
+DeviceOrientationBehaviorApp.INPUT_TYPE = 'Compass';
 
 DeviceOrientationBehaviorApp.prototype = {
   start: function() {
     this._domUtil.onDeviceOrientationChange(this._rotateByDeviceOrienationEvent.bind(this));
-    this._domUtil.showInputType(DeviceOrientationBehaviorApp.INPUT_TYPE_COMPASS);
+    this._domUtil.showInputType(DeviceOrientationBehaviorApp.INPUT_TYPE);
   },
 
   _rotateByDeviceOrienationEvent: function(event) {

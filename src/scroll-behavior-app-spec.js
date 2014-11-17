@@ -20,11 +20,10 @@ describe('after app start', function() {
       expect(mockedDomUtil.rotate).toHaveBeenCalledWith(scrollOffset);
     });
 
-    //it('should inform the UI what event is being used', function() {
-    //  startApp();
-    //  expect(mockedDomUtil.showInputType).toHaveBeenCalledWith(DeviceOrientationBehaviorApp.INPUT_TYPE_COMPASS);
-    //});
-    //
+    it('should update UI', function() {
+      startApp();
+      expect(mockedDomUtil.showInputType).toHaveBeenCalledWith(ScrollBehaviorApp.INPUT_TYPE);
+    });
   });
 
   function startApp() {

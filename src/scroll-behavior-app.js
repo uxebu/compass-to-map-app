@@ -3,10 +3,13 @@ function ScrollBehaviorApp(domUtil, convert) {
   this._convert = convert;
 }
 
+ScrollBehaviorApp.INPUT_TYPE = 'Scroll';
+
 ScrollBehaviorApp.prototype = {
 
   start: function() {
     this._domUtil.onScroll(this._rotateByScrollPosition.bind(this));
+    this._domUtil.showInputType(ScrollBehaviorApp.INPUT_TYPE);
   },
 
   _rotateByScrollPosition: function(scrollPos) {
