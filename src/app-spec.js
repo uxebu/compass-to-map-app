@@ -11,6 +11,7 @@ describe('after app start', function() {
   });
 
   it('rotate on scroll', function() {
+    mockedDomUtil.hasDeviceOrientation.andReturn(false);
     var scrollOffset = 42;
     fakeAScrollTo(scrollOffset, mockedDomUtil);
 
@@ -18,9 +19,19 @@ describe('after app start', function() {
   });
 
   it('rotate on deviceorientation change', function() {
+    mockedDomUtil.hasDeviceOrientation.andReturn(true);
     var degrees = 23;
+    fakeADeviceOrientationChangeTo(degrees, mockedDomUtil);
 
     expect(mockedDomUtil.rotate).toHaveBeenCalledWith(degrees);
+  });
+
+  it('should only use deviceorientation if available', function() {
+    mockedDomUtil.hasDeviceOrientation.andReturn(true);
+
+    startApp(mockedDomUtil);
+
+    expect(mockedDomUtil.onScroll).not.toHaveBeenCalled();
   });
 });
 

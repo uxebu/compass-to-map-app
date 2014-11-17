@@ -5,8 +5,11 @@ function App(domUtil, convert) {
 
 App.prototype = {
   start: function() {
-    this._domUtil.onScroll(this._rotateByScrollPosition.bind(this));
-    this._domUtil.onDeviceOrientationChange(this._rotateByDeviceOrienationEvent.bind(this));
+    if (this._domUtil.hasDeviceOrientation()) {
+      this._domUtil.onDeviceOrientationChange(this._rotateByDeviceOrienationEvent.bind(this));
+    } else {
+      this._domUtil.onScroll(this._rotateByScrollPosition.bind(this));
+    }
   },
 
   _rotateByScrollPosition: function(scrollPos) {
