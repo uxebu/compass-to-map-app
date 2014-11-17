@@ -4,13 +4,17 @@ var domUtil = {
   onDeviceOrientationChange: function() {}
 };
 
-function App() {}
+function App(domUtil, convert) {
+  this._domUtil = domUtil;
+  this._convert = convert;
+}
 App.prototype = {
   start: function() {
-    domUtil.onScroll(function(scrollPos) {
+    var convert = this._convert;
+    this._domUtil.onScroll(function(scrollPos) {
       rotateByDegrees(convert.scrollPositionToDegrees(scrollPos));
     });
-    domUtil.onDeviceOrientationChange(function(event) {
+    this._domUtil.onDeviceOrientationChange(function(event) {
       rotateByDegrees(convert.deviceOrientationEventToDegrees(event));
     });
   }
@@ -36,7 +40,7 @@ describe('after app start', function() {
   });
 
   function startApp() {
-    var app = new App();
+    var app = new App(domUtil, convert);
     app.start();
   }
 
