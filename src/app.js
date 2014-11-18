@@ -1,4 +1,3 @@
-var AppWatcher = require('./app-watcher');
 
 function App(domUtil, scrollApp, deviceRotationApp) {
   this._domUtil = domUtil;
@@ -23,8 +22,7 @@ App.prototype = {
 
   _startDeviceOrientationApp: function() {
     this._deviceRotationApp.start();
-    var watcher = new AppWatcher(this._deviceRotationApp, App.APP_WATCHER_TIMEOUT);
-    watcher.whenItStalls(this._switchToScrollApp.bind(this));
+    this._deviceRotationApp.doWhenStalledForGivenTime(App.APP_WATCHER_TIMEOUT, this._switchToScrollApp.bind(this));
   },
 
   _switchToScrollApp: function() {

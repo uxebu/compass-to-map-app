@@ -1,11 +1,11 @@
 var App = require('./app');
 var createDomUtilMock = require('./mocks/domUtilMockCreator');
+var DeviceRotationApp = require('./deviceorientation-behavior-app');
 
 function createFakeApp(className) {
   var methods = [
     'start',
-    'stop',
-    'hasReceivedEventLately'
+    'stop'
   ];
   return jasmine.createSpyObj(className, methods);
 }
@@ -20,7 +20,9 @@ describe('after app start', function() {
     mockedDomUtil = createDomUtilMock();
     scrollApp = createFakeApp('ScrollApp');
 
-    deviceRotationApp = createFakeApp('ScrollApp');
+    deviceRotationApp = new DeviceRotationApp();
+    spyOn(deviceRotationApp, 'start');
+    spyOn(deviceRotationApp, 'stop');
 
     jasmine.Clock.useMock();
   });
@@ -54,7 +56,7 @@ describe('after app start', function() {
 
       beforeEach(function() {
         mockedDomUtil.hasDeviceOrientation.andReturn(true);
-        deviceRotationApp.hasReceivedEventLately.andReturn(false);
+        spyOn(deviceRotationApp, 'isStalledSince').andReturn(true);
 
         var app = new App(mockedDomUtil, scrollApp, deviceRotationApp);
         app.start();
