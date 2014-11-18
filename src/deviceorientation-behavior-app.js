@@ -15,6 +15,9 @@ DeviceOrientationBehaviorApp.prototype = {
   stop: function() {},
 
   _rotateByDeviceOrienationEvent: function(event) {
+    if (event.alpha == null) {
+      return;
+    }
     this._lastEventTimestamp = new Date();
     this._rotateByDegrees(this._convert.deviceOrientationEventToDegrees(event));
   },

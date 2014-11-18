@@ -32,8 +32,10 @@ describe('after app start', function() {
     expect(mockedDomUtil.showInputType).toHaveBeenCalledWith(DeviceOrientationBehaviorApp.INPUT_TYPE);
   });
 
-  xit('should not rotate if alpha=null', function() {
-    expect(true).toBe(false);
+  it('should not rotate if alpha=null', function() {
+    startAppAndFakeADeviceOrientationChangeTo(null);
+
+    expect(mockedDomUtil.rotate).not.toHaveBeenCalled();
   });
 
   describe('does really fire deviceorientation events', function() {
@@ -78,7 +80,7 @@ describe('after app start', function() {
     mockedConvert.deviceOrientationEventToDegrees.andReturn(degrees);
     mockedDomUtil.onDeviceOrientationChange.andCallFake(function(cb) { onDeviceOrienationChangeCallback = cb; });
     startApp();
-    onDeviceOrienationChangeCallback(degrees);
+    onDeviceOrienationChangeCallback({alpha: degrees});
   }
 
 });
