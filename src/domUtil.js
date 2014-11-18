@@ -12,6 +12,9 @@ var domUtil = {
   onDeviceOrientationChange: function(fn) {
     window.addEventListener('deviceorientation', fn)
   },
+  offDeviceOrientationChange: function(fn) {
+    window.removeEventListener('deviceorientation', fn)
+  },
   hasDeviceOrientation: function() {
     return 'DeviceOrientationEvent' in window;
   },
