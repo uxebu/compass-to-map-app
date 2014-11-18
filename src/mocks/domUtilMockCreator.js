@@ -1,6 +1,7 @@
 var methodNames = [
   'onScroll',
   'onDeviceOrientationChange',
+  'offDeviceOrientationChange',
   'rotate',
   'hasDeviceOrientation',
   'showInputType',

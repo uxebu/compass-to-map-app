@@ -7,12 +7,17 @@ function DeviceOrientationBehaviorApp(domUtil, convert, timeUtil) {
 DeviceOrientationBehaviorApp.INPUT_TYPE = 'Compass';
 
 DeviceOrientationBehaviorApp.prototype = {
+
+  _handleRotationFunction: null,
   start: function() {
-    this._domUtil.onDeviceOrientationChange(this._rotateByDeviceOrienationEvent.bind(this));
+    this._handleRotationFunction = this._rotateByDeviceOrienationEvent.bind(this);
+    this._domUtil.onDeviceOrientationChange(this._handleRotationFunction);
     this._domUtil.showInputType(DeviceOrientationBehaviorApp.INPUT_TYPE);
   },
 
-  stop: function() {},
+  stop: function() {
+    this._domUtil.offDeviceOrientationChange(this._handleRotationFunction);
+  },
 
   _rotateByDeviceOrienationEvent: function(event) {
     if (event.alpha == null) {
