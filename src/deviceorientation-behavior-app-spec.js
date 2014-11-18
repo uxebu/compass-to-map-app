@@ -39,7 +39,7 @@ describe('after app start', function() {
   describe('does really fire deviceorientation events', function() {
 
     describe('if not', function() {
-      it('should fire doWhenStalledForGivenTime() after XXs', function() {
+      it('should fire doWhenStalledForGivenTime() after XX seconds', function() {
         var stalledCallback = jasmine.createSpy('stalledCallback');
         jasmine.Clock.useMock();
         var timeSince = 42;
@@ -53,7 +53,7 @@ describe('after app start', function() {
     });
 
     describe('if so', function() {
-      it('should NOT fire doWhenStalledForGivenTime() after XXs', function() {
+      it('should NOT fire doWhenStalledForGivenTime() after XX seconds', function() {
         var stalledCallback = jasmine.createSpy('stalledCallback');
         jasmine.Clock.useMock();
         var timeSince = 23;
