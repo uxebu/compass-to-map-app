@@ -24,6 +24,15 @@ It is intended to improve and allow to play with concepts like the
 [SOLID](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)),
 etc. all applying TDD.
 
+# Install
+
+1) Clone the repo locally e.g. using `git clone git@github.com:uxebu/compass-to-map-app.git`
+2) `cd compass-to-map-app`
+3) Just run `npm install`
+4) Just run `npm test` all should pass
+5) Run `npm start` which builds all the sources and start a web server (be sure to have nodejs at least 0.10)
+6) Open the browser at [http://localhost:8080/src](http://localhost:8080/src)
+
 # Next steps
 
 The domUtil.js is currently completely untested, it's just mocked away
@@ -36,7 +45,7 @@ Another hi-potential thing that can be done is creating a visualization
 of the depdendencies and which of them are mocked and where are the
 module/unit boundaries that are created using mocks. And trying to
 visualize the concepts and boundaries in a way that people new to
-the code have an easier way of aceessing and understanding it.
+the code have an easier way of accessing and understanding it.
 
 # Roadmap
 
@@ -55,5 +64,5 @@ following well:
 
 - mocking+spying away the DOM
 - separation of concerns
-- integration/end to end testing
+- proper application of unit/integration/end-to-end testing
 - applying the four rules of simple design (any software profits from that :))
