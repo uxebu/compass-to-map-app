@@ -41,12 +41,12 @@ describe('after app start', function() {
     describe('should report FALSE', function() {
       it('if NO events have been received', function() {
         startApp();
-        expect(app.hasReceivedEventLately(0)).toBe(false);
+        expect(app.isStalledSince(0)).toBe(true);
       });
       it('if NO events have been received in the given interval', function() {
         timeUtilMock.timePassedSince.andReturn(1200);
         startApp();
-        expect(app.hasReceivedEventLately(1000)).toBe(false);
+        expect(app.isStalledSince(1000)).toBe(true);
       });
     });
 
@@ -54,14 +54,14 @@ describe('after app start', function() {
       it('if events have been received', function() {
         timeUtilMock.timePassedSince.andReturn(0);
         startAppAndFakeADeviceOrientationChangeTo(1);
-        expect(app.hasReceivedEventLately(0)).toBe(true);
+        expect(app.isStalledSince(0)).toBe(false);
       });
       it('if events have been received shortly before the given interval', function() {
         timeUtilMock.timePassedSince.andReturn(900);
 
         startAppAndFakeADeviceOrientationChangeTo(1);
 
-        expect(app.hasReceivedEventLately(1000)).toBe(true);
+        expect(app.isStalledSince(1000)).toBe(false);
       });
     });
   });
