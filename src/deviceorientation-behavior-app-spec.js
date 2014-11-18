@@ -22,11 +22,6 @@ describe('after app start', function() {
     expect(mockedDomUtil.rotate).toHaveBeenCalledWith(degrees);
   });
 
-  it('should NOT act on scroll', function() {
-    startApp();
-    expect(mockedDomUtil.onScroll).not.toHaveBeenCalled();
-  });
-
   it('should update UI', function() {
     startApp();
     expect(mockedDomUtil.showInputType).toHaveBeenCalledWith(DeviceOrientationBehaviorApp.INPUT_TYPE);
