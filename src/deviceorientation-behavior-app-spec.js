@@ -36,34 +36,36 @@ describe('after app start', function() {
     expect(true).toBe(false);
   });
 
-  describe('hasReceievedEventLately', function() {
+  describe('does really fire deviceorientation events', function() {
 
-    describe('should report FALSE', function() {
-      it('if NO events have been received', function() {
+    describe('if not', function() {
+      it('should fire doWhenStalledForGivenTime() after XXs', function() {
+        var stalledCallback = jasmine.createSpy('stalledCallback');
+        jasmine.Clock.useMock();
+        var timeSince = 42;
+
         startApp();
-        expect(app.isStalledSince(0)).toBe(true);
-      });
-      it('if NO events have been received in the given interval', function() {
-        timeUtilMock.timePassedSince.andReturn(1200);
-        startApp();
-        expect(app.isStalledSince(1000)).toBe(true);
+        app.doWhenStalledForGivenTime(timeSince, stalledCallback);
+        jasmine.Clock.tick(timeSince);
+
+        expect(stalledCallback).toHaveBeenCalled();
       });
     });
 
-    describe('should report TRUE', function() {
-      it('if events have been received', function() {
-        timeUtilMock.timePassedSince.andReturn(0);
-        startAppAndFakeADeviceOrientationChangeTo(1);
-        expect(app.isStalledSince(0)).toBe(false);
-      });
-      it('if events have been received shortly before the given interval', function() {
-        timeUtilMock.timePassedSince.andReturn(900);
+    describe('if so', function() {
+      it('should NOT fire doWhenStalledForGivenTime() after XXs', function() {
+        var stalledCallback = jasmine.createSpy('stalledCallback');
+        jasmine.Clock.useMock();
+        var timeSince = 23;
 
-        startAppAndFakeADeviceOrientationChangeTo(1);
+        startAppAndFakeADeviceOrientationChangeTo(100);
+        app.doWhenStalledForGivenTime(timeSince, stalledCallback);
+        jasmine.Clock.tick(timeSince);
 
-        expect(app.isStalledSince(1000)).toBe(false);
+        expect(stalledCallback).not.toHaveBeenCalled();
       });
     });
+
   });
 
   function startApp() {

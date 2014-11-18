@@ -32,7 +32,7 @@ DeviceOrientationBehaviorApp.prototype = {
     return this._timeUtil.timePassedSince(this._lastEventTimestamp) > timeSince;
   },
 
-  isStalledSince: function(timeSince) {
+  _isStalledSince: function(timeSince) {
     if (this._didNeverFireAnyEvent()) {
       return true;
     }
@@ -42,7 +42,7 @@ DeviceOrientationBehaviorApp.prototype = {
   doWhenStalledForGivenTime: function(timeSince, fn) {
     var self = this;
     setTimeout(function() {
-      if (self.isStalledSince(timeSince)) {
+      if (self._isStalledSince(timeSince)) {
         fn();
       }
     }, timeSince);

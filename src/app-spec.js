@@ -56,7 +56,7 @@ describe('after app start', function() {
 
       beforeEach(function() {
         mockedDomUtil.hasDeviceOrientation.andReturn(true);
-        spyOn(deviceRotationApp, 'isStalledSince').andReturn(true);
+        spyOn(deviceRotationApp, '_isStalledSince').andReturn(true);
 
         var app = new App(mockedDomUtil, scrollApp, deviceRotationApp);
         app.start();
