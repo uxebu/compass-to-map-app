@@ -1,11 +1,11 @@
 var App = require('./app');
 var createDomUtilMock = require('./mocks/domUtilMockCreator');
-var DeviceRotationApp = require('./deviceorientation-behavior-app');
 
 function createFakeApp(className) {
   var methods = [
     'start',
-    'stop'
+    'stop',
+    'doWhenStalledForGivenTime'
   ];
   return jasmine.createSpyObj(className, methods);
 }
@@ -19,10 +19,7 @@ describe('after app start', function() {
   beforeEach(function() {
     mockedDomUtil = createDomUtilMock();
     scrollApp = createFakeApp('ScrollApp');
-
-    deviceRotationApp = new DeviceRotationApp();
-    spyOn(deviceRotationApp, 'start');
-    spyOn(deviceRotationApp, 'stop');
+    deviceRotationApp = createFakeApp('DeviceRotationApp');
 
     jasmine.Clock.useMock();
   });
@@ -52,15 +49,15 @@ describe('after app start', function() {
       expect(deviceRotationApp.start).toHaveBeenCalled();
     });
 
-    describe('switch back to scroll if deviceorientation doesnt change', function() {
+    describe('switch back to scroll if deviceorientation stalled', function() {
 
       beforeEach(function() {
         mockedDomUtil.hasDeviceOrientation.andReturn(true);
-        spyOn(deviceRotationApp, '_isStalledSince').andReturn(true);
+        var stalledCallback;
+        deviceRotationApp.doWhenStalledForGivenTime.andCallFake(function(timeout, cb) { stalledCallback=cb; });
 
-        var app = new App(mockedDomUtil, scrollApp, deviceRotationApp);
-        app.start();
-        jasmine.Clock.tick(App.APP_WATCHER_TIMEOUT);
+        startApp();
+        stalledCallback();
       });
 
       it('should switch after given interval', function() {
