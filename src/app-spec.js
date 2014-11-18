@@ -25,7 +25,7 @@ describe('after app start', function() {
     jasmine.Clock.useMock();
   });
   afterEach(function() {
-    jasmine.Clock.tick(App.TYPE_SWITCH_TIMEOUT);
+    jasmine.Clock.tick(App.APP_WATCHER_TIMEOUT);
   });
 
   describe('and page was loaded', function() {
@@ -58,7 +58,7 @@ describe('after app start', function() {
 
         var app = new App(mockedDomUtil, scrollApp, deviceRotationApp);
         app.start();
-        jasmine.Clock.tick(App.TYPE_SWITCH_TIMEOUT);
+        jasmine.Clock.tick(App.APP_WATCHER_TIMEOUT);
       });
 
       it('should switch after given interval', function() {
