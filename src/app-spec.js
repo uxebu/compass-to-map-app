@@ -20,11 +20,6 @@ describe('after app start', function() {
     mockedDomUtil = createDomUtilMock();
     scrollApp = createFakeApp('ScrollApp');
     deviceRotationApp = createFakeApp('DeviceRotationApp');
-
-    jasmine.Clock.useMock();
-  });
-  afterEach(function() {
-    jasmine.Clock.tick(App.APP_WATCHER_TIMEOUT);
   });
 
   describe('and page was loaded', function() {
