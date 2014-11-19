@@ -48,9 +48,8 @@ DeviceOrientationBehaviorApp.prototype = {
   },
 
   doWhenStalledForGivenTime: function(timeSince, fn) {
-    var self = this;
-    setTimeout(function() {
-      if (self._isStalledSince(timeSince)) {
+    setTimeout(() => {
+      if (this._isStalledSince(timeSince)) {
         fn();
       }
     }, timeSince);

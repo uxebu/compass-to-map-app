@@ -1,24 +1,22 @@
-function ScrollBehaviorApp(domUtil, convert) {
-  this._domUtil = domUtil;
-  this._convert = convert;
-}
+class ScrollBehaviorApp {
+  constructor(domUtil, convert) {
+    this._domUtil = domUtil;
+    this._convert = convert;
+  }
 
-ScrollBehaviorApp.INPUT_TYPE = 'Scroll';
-
-ScrollBehaviorApp.prototype = {
-
-  start: function() {
+  start() {
     this._domUtil.onScroll(this._rotateByScrollPosition.bind(this));
     this._domUtil.showInputType(ScrollBehaviorApp.INPUT_TYPE);
-  },
+  }
 
-  _rotateByScrollPosition: function(scrollPos) {
+  _rotateByScrollPosition(scrollPos) {
     this._rotateByDegrees(this._convert.scrollPositionToDegrees(scrollPos));
-  },
+  }
 
-  _rotateByDegrees: function(degrees) {
+  _rotateByDegrees(degrees) {
     this._domUtil.rotate(degrees);
   }
-};
+}
+ScrollBehaviorApp.INPUT_TYPE = 'Scroll';
 
 module.exports = ScrollBehaviorApp;
