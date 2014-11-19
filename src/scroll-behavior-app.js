@@ -1,4 +1,4 @@
-class ScrollBehaviorApp {
+export class ScrollBehaviorApp {
   constructor(domUtil, convert) {
     this._domUtil = domUtil;
     this._convert = convert;
@@ -18,5 +18,3 @@ class ScrollBehaviorApp {
   }
 }
 ScrollBehaviorApp.INPUT_TYPE = 'Scroll';
-
-module.exports = ScrollBehaviorApp;
