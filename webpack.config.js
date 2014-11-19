@@ -1,11 +1,9 @@
-var path = require('path');
-
 module.exports = {
   entry: './src/main',
   output: 'bundle.js',
   module: {
     loaders: [
-      //{ test: /\.js$/, loader: 'jsx-loader?harmony' }
+      {test: /\.js$/, loader: 'es6-loader'}
     ]
   },
   resolve: {

@@ -10,9 +10,11 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "es6-loader": "^0.2.0",
     "jasmine-node": "^1.14.5",
     "jquery": "^2.1.1",
     "planet-maps": "^0.1.0",
+    "traceur": "0.0.74",
     "webpack": "^1.4.13",
     "webpack-dev-server": "^1.6.5"
   }
