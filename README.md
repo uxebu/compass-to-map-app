@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/uxebu/compass-to-map-app.svg)](https://travis-ci.org/uxebu/compass-to-map-app)
 [![Coverage Status](https://img.shields.io/coveralls/uxebu/compass-to-map-app.svg)](https://coveralls.io/r/uxebu/compass-to-map-app)
+[![Codeship Status for uxebu/compass-to-map-app](https://codeship.com/projects/86c157c0-532a-0132-cba3-7a0865c6b648/status)](https://codeship.com/projects/48881)
 
 # Compass map kata app
 
