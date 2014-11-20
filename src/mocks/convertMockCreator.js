@@ -1,10 +1,8 @@
-var methodNames = [
-  'scrollPositionToDegrees',
-  'deviceOrientationEventToDegrees'
-];
-
-function createMock() {
-  return jasmine.createSpyObj('convert', methodNames);
+export function createMock(sinon) {
+  var convert = {
+    scrollPositionToDegrees: function() {},
+    deviceOrientationEventToDegrees: function() {}
+  };
+  sinon.stub(convert);
+  return convert;
 }
-
-module.exports = createMock;

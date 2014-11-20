@@ -1,5 +1,5 @@
 import {App} from './app'
-var createDomUtilMock = require('./mocks/domUtilMockCreator');
+import {createMock as createDomUtilMock} from './mocks/domUtilMockCreator'
 import {assert} from './test-helper/assert'
 
 function createFakeApp(sinon) {

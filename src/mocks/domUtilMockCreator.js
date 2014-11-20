@@ -1,4 +1,4 @@
-function createMock(sinon) {
+export function createMock(sinon) {
   var domUtil = {
     onScroll: function() {},
     onDeviceOrientationChange: function() {},
@@ -11,5 +11,3 @@ function createMock(sinon) {
   sinon.stub(domUtil);
   return domUtil;
 }
-
-module.exports = createMock;
