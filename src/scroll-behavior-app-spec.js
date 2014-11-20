@@ -1,6 +1,7 @@
-var ScrollBehaviorApp = require('./scroll-behavior-app');
-var createDomUtilMock = require('./mocks/domUtilMockCreator');
-var createConvertMock = require('./mocks/convertMockCreator');
+import {assert} from './test-helper/assert'
+import {ScrollBehaviorApp} from './scroll-behavior-app'
+import {createMock as createDomUtilMock} from './mocks/domUtilMockCreator'
+import {createMock as createConvertMock} from './mocks/convertMockCreator'
 
 describe('after app start', function() {
 
@@ -8,8 +9,8 @@ describe('after app start', function() {
   var mockedConvert;
 
   beforeEach(function() {
-    mockedDomUtil = createDomUtilMock();
-    mockedConvert = createConvertMock();
+    mockedDomUtil = createDomUtilMock(this.sinon);
+    mockedConvert = createConvertMock(this.sinon);
   });
 
   describe('and page was loaded', function() {
@@ -17,12 +18,12 @@ describe('after app start', function() {
       var scrollOffset = 42;
       startAppAndFakeAScrollTo(scrollOffset);
 
-      expect(mockedDomUtil.rotate).toHaveBeenCalledWith(scrollOffset);
+      assert.calledWith(mockedDomUtil.rotate, scrollOffset);
     });
 
     it('should update UI', function() {
       startApp();
-      expect(mockedDomUtil.showInputType).toHaveBeenCalledWith(ScrollBehaviorApp.INPUT_TYPE);
+      assert.calledWith(mockedDomUtil.showInputType, ScrollBehaviorApp.INPUT_TYPE);
     });
   });
 
@@ -32,11 +33,9 @@ describe('after app start', function() {
   }
 
   function startAppAndFakeAScrollTo(scrollOffset) {
-    var onScrollCallback;
-    mockedConvert.scrollPositionToDegrees.andReturn(scrollOffset);
-    mockedDomUtil.onScroll.andCallFake(function(cb) { onScrollCallback = cb; });
+    mockedConvert.scrollPositionToDegrees.returns(scrollOffset);
     startApp();
-    onScrollCallback(scrollOffset);
+    mockedDomUtil.onScroll.yield(scrollOffset);
   }
 
 });
