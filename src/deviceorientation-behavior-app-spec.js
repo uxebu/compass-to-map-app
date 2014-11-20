@@ -38,8 +38,6 @@ describe('after app start', function() {
   });
 
   it('should disconnect on stop() call', function() {
-    var degrees = 10;
-    mockedConvert.deviceOrientationEventToDegrees.returns(degrees);
     startApp();
     app.stop();
 
