@@ -11,12 +11,6 @@ function createFakeApp(sinon) {
   };
   sinon.stub(app);
   return app;
-  var methods = [
-    'start',
-    'stop',
-    'doWhenStalledForGivenTime'
-  ];
-  return jasmine.createSpyObj(className, methods);
 }
 
 describe('after app start', function() {
