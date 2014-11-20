@@ -4,13 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine-node src",
+    "test": "mocha --compilers js:mocha-traceur src/*spec.js",
     "start": "webpack-dev-server"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "jasmine-node": "^1.14.5",
     "jquery": "^2.1.1",
     "mocha": "^2.0.1",
     "mocha-traceur": "^2.0.0",
