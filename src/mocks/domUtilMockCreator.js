@@ -1,15 +1,15 @@
-var methodNames = [
-  'onScroll',
-  'onDeviceOrientationChange',
-  'offDeviceOrientationChange',
-  'rotate',
-  'hasDeviceOrientation',
-  'showInputType',
-  'onPageLoaded'
-];
-
-function createMock() {
-  return jasmine.createSpyObj('domUtil', methodNames);
+function createMock(sinon) {
+  var domUtil = {
+    onScroll: function() {},
+    onDeviceOrientationChange: function() {},
+    offDeviceOrientationChange: function() {},
+    rotate: function() {},
+    hasDeviceOrientation: function() {},
+    showInputType: function() {},
+    onPageLoaded: function() {},
+  };
+  sinon.stub(domUtil);
+  return domUtil;
 }
 
 module.exports = createMock;
