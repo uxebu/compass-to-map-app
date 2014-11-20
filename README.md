@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/uxebu/compass-to-map-app.svg)](https://travis-ci.org/uxebu/compass-to-map-app)
+
 # Compass map kata app
 
 This app started out as a kata for students, where the initial
