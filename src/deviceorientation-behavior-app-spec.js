@@ -38,14 +38,14 @@ describe('after app start', function() {
   });
 
   it('should disconnect on stop() call', function() {
-    var onDeviceOrienationChangeCallback;
     var degrees = 10;
-    mockedConvert.deviceOrientationEventToDegrees.andReturn(degrees);
-    mockedDomUtil.onDeviceOrientationChange.andCallFake(function(cb) { onDeviceOrienationChangeCallback = cb; });
+    mockedConvert.deviceOrientationEventToDegrees.returns(degrees);
     startApp();
     app.stop();
 
-    expect(mockedDomUtil.offDeviceOrientationChange).toHaveBeenCalledWith(onDeviceOrienationChangeCallback);
+    // this check is way too complicated, try to simplify it!
+    var onDeviceOrienationChangeCallback = mockedDomUtil.onDeviceOrientationChange.getCall(0).args[0];
+    assert.calledWith(mockedDomUtil.offDeviceOrientationChange, onDeviceOrienationChangeCallback);
   });
 
   describe('does really fire deviceorientation events', function() {
