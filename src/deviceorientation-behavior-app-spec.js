@@ -52,29 +52,29 @@ describe('after app start', function() {
 
     describe('if not', function() {
       it('should fire doWhenStalledForGivenTime() after XX seconds', function() {
-        var stalledCallback = jasmine.createSpy('stalledCallback');
-        jasmine.Clock.useMock();
+        var stalledCallback = this.sinon.spy();
+        var clock = this.sinon.useFakeTimers();
         var timeSince = 42;
 
         startApp();
         app.doWhenStalledForGivenTime(timeSince, stalledCallback);
-        jasmine.Clock.tick(timeSince);
+        clock.tick(timeSince);
 
-        expect(stalledCallback).toHaveBeenCalled();
+        assert.called(stalledCallback);
       });
     });
 
     describe('if so', function() {
       it('should NOT fire doWhenStalledForGivenTime() after XX seconds', function() {
-        var stalledCallback = jasmine.createSpy('stalledCallback');
-        jasmine.Clock.useMock();
+        var stalledCallback = this.sinon.spy();
+        var clock = this.sinon.useFakeTimers();
         var timeSince = 23;
 
         startAppAndFakeADeviceOrientationChangeTo(100);
         app.doWhenStalledForGivenTime(timeSince, stalledCallback);
-        jasmine.Clock.tick(timeSince);
+        clock.tick(timeSince);
 
-        expect(stalledCallback).not.toHaveBeenCalled();
+        assert.notCalled(stalledCallback);
       });
     });
 
