@@ -23,18 +23,18 @@ describe('after app start', function() {
   it('rotate on deviceorientation change', function() {
     var degrees = 23;
     startAppAndFakeADeviceOrientationChangeTo(degrees);
-    expect(mockedDomUtil.rotate).toHaveBeenCalledWith(degrees);
+    assert.calledWith(mockedDomUtil.rotate, degrees);
   });
 
   it('should update UI', function() {
     startApp();
-    expect(mockedDomUtil.showInputType).toHaveBeenCalledWith(DeviceOrientationBehaviorApp.INPUT_TYPE);
+    assert.calledWith(mockedDomUtil.showInputType, DeviceOrientationBehaviorApp.INPUT_TYPE);
   });
 
   it('should not rotate if alpha=null', function() {
     startAppAndFakeADeviceOrientationChangeTo(null);
 
-    expect(mockedDomUtil.rotate).not.toHaveBeenCalled();
+    assert.notCalled(mockedDomUtil.rotate);
   });
 
   it('should disconnect on stop() call', function() {
