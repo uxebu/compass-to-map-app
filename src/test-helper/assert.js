@@ -1,3 +1,5 @@
+require('./sinon-cleanup');
+
 var nodeAssert = require('assert');
 var sinon = require('sinon');
 

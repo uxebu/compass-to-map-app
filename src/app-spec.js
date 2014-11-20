@@ -1,4 +1,3 @@
-require('./test-helper/sinon-cleanup');
 import {App} from './app'
 var createDomUtilMock = require('./mocks/domUtilMockCreator');
 import {assert} from './test-helper/assert'
