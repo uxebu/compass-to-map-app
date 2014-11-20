@@ -6,7 +6,7 @@ module.exports = {
       // Transpile any JavaScript file:
       {
         test: /\.js$/,
-        loader: 'webpack-traceur?runtime',
+        loader: 'webpack-traceur?runtime&sourceMaps',
         exclude: /node_modules/
       }
     ]
@@ -14,5 +14,6 @@ module.exports = {
   resolve: {
     // you can now require('file') instead of require('file.js')
     extensions: ['', '.js', '.json']
-  }
+  },
+  debug: true
 };
