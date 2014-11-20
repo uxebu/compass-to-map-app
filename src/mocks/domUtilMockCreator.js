@@ -6,7 +6,7 @@ function createMock(sinon) {
     rotate: function() {},
     hasDeviceOrientation: function() {},
     showInputType: function() {},
-    onPageLoaded: function() {},
+    onPageLoaded: function() {}
   };
   sinon.stub(domUtil);
   return domUtil;
