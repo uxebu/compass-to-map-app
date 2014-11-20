@@ -1,6 +1,7 @@
-var DeviceOrientationBehaviorApp = require('./deviceorientation-behavior-app');
-var createDomUtilMock = require('./mocks/domUtilMockCreator');
-var createConvertMock = require('./mocks/convertMockCreator');
+import {assert} from './test-helper/assert'
+import {DeviceOrientationBehaviorApp} from './deviceorientation-behavior-app'
+import {createMock as createDomUtilMock} from './mocks/domUtilMockCreator'
+import {createMock as createConvertMock} from './mocks/convertMockCreator'
 
 
 describe('after app start', function() {
@@ -11,9 +12,12 @@ describe('after app start', function() {
   var timeUtilMock;
 
   beforeEach(function() {
-    mockedDomUtil = createDomUtilMock();
-    mockedConvert = createConvertMock();
-    timeUtilMock = jasmine.createSpyObj('timeUtil', ['timePassedSince']);
+    mockedDomUtil = createDomUtilMock(this.sinon);
+    mockedConvert = createConvertMock(this.sinon);
+    var timeUtil = {
+      timePassedSince: function() {}
+    };
+    timeUtilMock = this.sinon.stub(timeUtil);
   });
 
   it('rotate on deviceorientation change', function() {
@@ -82,11 +86,9 @@ describe('after app start', function() {
   }
 
   function startAppAndFakeADeviceOrientationChangeTo(degrees) {
-    var onDeviceOrienationChangeCallback;
-    mockedConvert.deviceOrientationEventToDegrees.andReturn(degrees);
-    mockedDomUtil.onDeviceOrientationChange.andCallFake(function(cb) { onDeviceOrienationChangeCallback = cb; });
+    mockedConvert.deviceOrientationEventToDegrees.returns(degrees);
     startApp();
-    onDeviceOrienationChangeCallback({alpha: degrees});
+    mockedDomUtil.onDeviceOrientationChange.yield({alpha: degrees});
   }
 
 });
