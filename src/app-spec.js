@@ -1,7 +1,16 @@
-var App = require('./app');
+require('./test-helper/sinon-cleanup');
+import {App} from './app'
 var createDomUtilMock = require('./mocks/domUtilMockCreator');
+import {assert} from './test-helper/assert'
 
-function createFakeApp(className) {
+function createFakeApp(sinon) {
+  var app = {
+    start: function() {},
+    stop: function() {},
+    doWhenStalledForGivenTime: function() {}
+  };
+  sinon.stub(app);
+  return app;
   var methods = [
     'start',
     'stop',
@@ -17,49 +26,47 @@ describe('after app start', function() {
   var deviceRotationApp;
 
   beforeEach(function() {
-    mockedDomUtil = createDomUtilMock();
-    scrollApp = createFakeApp('ScrollApp');
-    deviceRotationApp = createFakeApp('DeviceRotationApp');
+    mockedDomUtil = createDomUtilMock(this.sinon);
+    scrollApp = createFakeApp(this.sinon);
+    deviceRotationApp = createFakeApp(this.sinon);
   });
 
   describe('and page was loaded', function() {
 
     beforeEach(function() {
-      mockedDomUtil.onPageLoaded.andCallFake(function(fn) { fn(); });
+      mockedDomUtil.onPageLoaded.yields();
     });
 
     it('should start the scroll app yet', function() {
-      mockedDomUtil.hasDeviceOrientation.andReturn(false);
+      mockedDomUtil.hasDeviceOrientation.returns(false);
 
       startApp();
 
-      expect(scrollApp.start).toHaveBeenCalled();
+      assert.called(scrollApp.start);
     });
 
     it('deviceorientation should not rotate yet', function() {
-      mockedDomUtil.hasDeviceOrientation.andReturn(true);
+      mockedDomUtil.hasDeviceOrientation.returns(true);
 
       startApp();
 
-      expect(deviceRotationApp.start).toHaveBeenCalled();
+      assert.called(deviceRotationApp.start);
     });
 
     describe('switch back to scroll if deviceorientation stalled', function() {
 
       beforeEach(function() {
-        mockedDomUtil.hasDeviceOrientation.andReturn(true);
-        var stalledCallback;
-        deviceRotationApp.doWhenStalledForGivenTime.andCallFake(function(timeout, cb) { stalledCallback=cb; });
+        mockedDomUtil.hasDeviceOrientation.returns(true);
+        deviceRotationApp.doWhenStalledForGivenTime.yields();
 
         startApp();
-        stalledCallback();
       });
 
       it('should switch after given interval', function() {
-        expect(scrollApp.start).toHaveBeenCalled();
+        assert.called(scrollApp.start);
       });
       it('should disconnect the deviceorientation hook', function() {
-        expect(deviceRotationApp.stop).toHaveBeenCalled();
+        assert.called(deviceRotationApp.stop);
       });
     });
 
@@ -67,19 +74,19 @@ describe('after app start', function() {
 
   describe('if page has not been loaded yet', function() {
     it('should not start the scroll app yet', function() {
-      mockedDomUtil.hasDeviceOrientation.andReturn(false);
+      mockedDomUtil.hasDeviceOrientation.returns(false);
 
       startApp();
 
-      expect(scrollApp.start).not.toHaveBeenCalled();
+      assert.notCalled(scrollApp.start);
     });
 
     it('deviceorientation should not rotate yet', function() {
-      mockedDomUtil.hasDeviceOrientation.andReturn(true);
+      mockedDomUtil.hasDeviceOrientation.returns(true);
 
       startApp();
 
-      expect(deviceRotationApp.start).not.toHaveBeenCalled();
+      assert.notCalled(deviceRotationApp.start);
     });
   });
 
