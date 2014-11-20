@@ -3,7 +3,12 @@ module.exports = {
   output: 'bundle.js',
   module: {
     loaders: [
-      {test: /\.js$/, loader: 'es6-loader'}
+      // Transpile any JavaScript file:
+      {
+        test: /\.js$/,
+        loader: 'webpack-traceur?runtime',
+        exclude: /node_modules/
+      }
     ]
   },
   resolve: {
