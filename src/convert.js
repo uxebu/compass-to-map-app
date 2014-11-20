@@ -1,4 +1,4 @@
-var convert = {
+export var convert = {
   scrollPositionToDegrees: function(scrollPosition) {
     return scrollPosition.top / 2;
   },
@@ -6,5 +6,3 @@ var convert = {
     return event.alpha;
   }
 };
-
-module.exports = convert;
