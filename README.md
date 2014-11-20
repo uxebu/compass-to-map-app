@@ -26,12 +26,12 @@ etc. all applying TDD.
 
 # Install
 
-1) Clone the repo locally e.g. using `git clone git@github.com:uxebu/compass-to-map-app.git`
-2) `cd compass-to-map-app`
-3) Just run `npm install`
-4) Just run `npm test` all should pass
-5) Run `npm start` which builds all the sources and start a web server (be sure to have nodejs at least 0.10)
-6) Open the browser at [http://localhost:8080/src](http://localhost:8080/src)
+1. Clone the repo locally e.g. using `git clone git@github.com:uxebu/compass-to-map-app.git`
+2. `cd compass-to-map-app`
+3. Just run `npm install`
+4. Just run `npm test` all should pass
+5. Run `npm start` which builds all the sources and start a web server (be sure to have nodejs at least 0.10)
+6. Open the browser at [http://localhost:8080/src](http://localhost:8080/src)
 
 # Next steps
 
