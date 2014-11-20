@@ -1,5 +1,5 @@
-var App = require('./app');
-var domUtil = require('./domUtil');
+import {App} from './app'
+import {domUtil} from './domUtil';
 var convert = require('./convert');
 var DeviceRotationApp = require('./deviceorientation-behavior-app');
 var timeUtil = require('./timeUtil');

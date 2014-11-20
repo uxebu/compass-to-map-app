@@ -1,6 +1,6 @@
 import jQuery from 'jquery'
 
-var domUtil = {
+export var domUtil = {
   rotate: function(degrees) {
     jQuery('#compassImage').css('transform', 'rotate('+degrees+'deg)');
   },
@@ -25,5 +25,3 @@ var domUtil = {
     jQuery(fn);
   }
 };
-
-module.exports = domUtil;

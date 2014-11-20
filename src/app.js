@@ -1,4 +1,4 @@
-class App {
+export class App {
 
   constructor(domUtil, scrollApp, deviceRotationApp) {
     this._domUtil = domUtil;
@@ -29,7 +29,4 @@ class App {
   }
 
 }
-
 App.APP_WATCHER_TIMEOUT = 2*1000;
-
-module.exports = App;
