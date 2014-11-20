@@ -1,4 +1,4 @@
-var jQuery = require('jquery');
+import jQuery from 'jquery'
 
 var domUtil = {
   rotate: function(degrees) {
