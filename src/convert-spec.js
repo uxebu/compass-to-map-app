@@ -1,16 +1,17 @@
-var convert = require('./convert');
+import {assert} from './test-helper/assert'
+import {convert} from './convert'
 
 describe('convert', function() {
 
   it('scroll position to degrees', function() {
     var degrees = 42;
     var scrollPosition = {top: degrees};
-    expect(convert.scrollPositionToDegrees(scrollPosition)).toBe(degrees/2);
+    assert.equal(convert.scrollPositionToDegrees(scrollPosition), degrees/2);
   });
 
   it('deviceorientation event to degrees', function() {
     var degrees = 42;
     var event = {alpha: degrees};
-    expect(convert.deviceOrientationEventToDegrees(event)).toBe(degrees);
+    assert.equal(convert.deviceOrientationEventToDegrees(event), degrees);
   });
 });
