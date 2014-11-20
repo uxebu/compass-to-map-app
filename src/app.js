@@ -1,35 +1,35 @@
+class App {
 
-function App(domUtil, scrollApp, deviceRotationApp) {
-  this._domUtil = domUtil;
-  this._scrollApp = scrollApp;
-  this._deviceRotationApp = deviceRotationApp;
-}
+  constructor(domUtil, scrollApp, deviceRotationApp) {
+    this._domUtil = domUtil;
+    this._scrollApp = scrollApp;
+    this._deviceRotationApp = deviceRotationApp;
+  }
 
-App.APP_WATCHER_TIMEOUT = 2*1000;
-
-App.prototype = {
-  start: function() {
+  start() {
     this._domUtil.onPageLoaded(this._startApp.bind(this));
-  },
+  }
 
-  _startApp: function() {
+  _startApp() {
     if (this._domUtil.hasDeviceOrientation()) {
       this._startDeviceOrientationApp();
     } else {
       this._scrollApp.start();
     }
-  },
+  }
 
-  _startDeviceOrientationApp: function() {
+  _startDeviceOrientationApp() {
     this._deviceRotationApp.start();
     this._deviceRotationApp.doWhenStalledForGivenTime(App.APP_WATCHER_TIMEOUT, this._switchToScrollApp.bind(this));
-  },
+  }
 
-  _switchToScrollApp: function() {
+  _switchToScrollApp() {
     this._deviceRotationApp.stop();
     this._scrollApp.start();
   }
 
-};
+}
+
+App.APP_WATCHER_TIMEOUT = 2*1000;
 
 module.exports = App;
