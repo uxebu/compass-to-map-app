@@ -1,6 +1,6 @@
-import {App} from './app'
-import {createMock as createDomUtilMock} from './mocks/domUtilMockCreator'
-import {assert} from './test-helper/assert'
+import {App} from './app';
+import {createMock as createDomUtilMock} from './mocks/domUtilMockCreator';
+import {assert} from './test-helper/assert';
 
 function createFakeApp(sinon) {
   var app = {

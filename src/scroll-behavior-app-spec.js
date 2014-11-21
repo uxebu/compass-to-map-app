@@ -1,7 +1,7 @@
-import {assert} from './test-helper/assert'
-import {ScrollBehaviorApp} from './scroll-behavior-app'
-import {createMock as createDomUtilMock} from './mocks/domUtilMockCreator'
-import {createMock as createConvertMock} from './mocks/convertMockCreator'
+import {assert} from './test-helper/assert';
+import {ScrollBehaviorApp} from './scroll-behavior-app';
+import {createMock as createDomUtilMock} from './mocks/domUtilMockCreator';
+import {createMock as createConvertMock} from './mocks/convertMockCreator';
 
 describe('after app start', function() {
 

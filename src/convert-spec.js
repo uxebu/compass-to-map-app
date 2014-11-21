@@ -1,5 +1,5 @@
-import {assert} from './test-helper/assert'
-import {convert} from './convert'
+import {assert} from './test-helper/assert';
+import {convert} from './convert';
 
 describe('convert', function() {
 
