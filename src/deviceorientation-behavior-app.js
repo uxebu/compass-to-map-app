@@ -19,7 +19,7 @@ export class DeviceOrientationBehaviorApp {
   }
 
   _rotateByDeviceOrienationEvent(event) {
-    if (event.alpha == null) {
+    if (event.alpha === null) {
       return;
     }
     this._lastEventTimestamp = new Date();
@@ -31,7 +31,7 @@ export class DeviceOrientationBehaviorApp {
   }
 
   _didNeverFireAnyEvent() {
-    return this._lastEventTimestamp == null;
+    return this._lastEventTimestamp === null;
   }
 
   _firedAnEventSince(timeSince) {
